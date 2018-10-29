@@ -62,7 +62,7 @@ namespace Model.EF
 
         public bool? Status { get; set; }
 
-        public DateTime? TopHot { get; set; }
+        public bool? TopHot { get; set; }
 
         public int? ViewCount { get; set; }
 

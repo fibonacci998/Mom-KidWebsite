@@ -12,3 +12,17 @@ D:\Google drive\Datacode\C#\OnlineShop\Model\bin\Debug\PagedList.dll
 D:\Google drive\Datacode\C#\OnlineShop\Model\bin\Debug\PagedList.Mvc.dll
 D:\Google drive\Datacode\C#\OnlineShop\Model\bin\Debug\PagedList.xml
 D:\Google drive\Datacode\C#\OnlineShop\Model\bin\Debug\PagedList.Mvc.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\Model.dll.config
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\Model.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\Model.pdb
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\EntityFramework.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\EntityFramework.SqlServer.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\PagedList.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\PagedList.Mvc.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\EntityFramework.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\EntityFramework.SqlServer.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\PagedList.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\PagedList.Mvc.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Debug\Model.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Debug\Model.pdb

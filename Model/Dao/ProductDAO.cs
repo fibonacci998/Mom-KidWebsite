@@ -25,5 +25,25 @@ namespace Model.Dao
         {
             return db.Products.OrderByDescending(x=>x.ID).ToPagedList(page,pageSize);
         }
+        public Product ViewDetail(int id)
+        {
+            return db.Products.Find(id);
+        }
+        public bool Update(Product entity)
+        {
+            try
+            {
+                var product = db.Products.Find(entity.ID);
+                product.Quantity = entity.Quantity;
+                product.Price = entity.Price;
+                product.ModifiedDate = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }
