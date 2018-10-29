@@ -97,5 +97,12 @@ namespace Model.Dao
         {
             return db.Users.SingleOrDefault(x => x.Username==username);
         }
+        public bool ChangStatus(long id)
+        {
+            var user = db.Users.Find(id);
+            user.Status = !user.Status;
+
+            return !user.Status;
+        }
     }
 }

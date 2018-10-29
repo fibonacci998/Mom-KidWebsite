@@ -79,5 +79,14 @@ namespace OnlineShop.Areas.Admin.Controllers
             new UserDAO().Delete(id);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public JsonResult ChangeStatus(long id)
+        {
+            var result = new UserDAO().ChangStatus(id);
+            return Json(new
+            {
+                status = result
+            });
+        }
     }
 }
