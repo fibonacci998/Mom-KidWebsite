@@ -16,6 +16,7 @@ namespace Model.EF
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<ContentTag> ContentTags { get; set; }
+        public virtual DbSet<EmailContact> EmailContacts { get; set; }
         public virtual DbSet<Footer> Footers { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Order> Orders { get; set; }

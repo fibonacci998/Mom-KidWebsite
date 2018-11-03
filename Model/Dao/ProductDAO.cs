@@ -14,8 +14,18 @@ namespace Model.Dao
         {
             db = new OnlineShopDbContext();
         }
+
+        public List<Product> ListNewProduct(int top)
+        {
+            return db.Products.OrderByDescending(x => x.CreatedDate).Take(top).ToList();
+        }
+        public List<Product> ListHotProduct(int top)
+        {
+            return db.Products.Where(x => x.TopHot == true).OrderByDescending(y=>y.CreatedDate).Take(top).ToList();
+        }
         public bool Insert(Product product)
         {
+            product.CreatedDate = DateTime.Now;
             db.Products.Add(product);
             db.SaveChanges();
             return true;

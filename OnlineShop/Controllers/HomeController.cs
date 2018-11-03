@@ -1,4 +1,5 @@
 ﻿using Model.Dao;
+using Model.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace OnlineShop.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            ViewBag.Slides = new SlideDAO().ListAll();
+            var productDAO = new ProductDAO();
+            ViewBag.NewProducts = productDAO.ListNewProduct(6);
+            ViewBag.HotProducts = productDAO.ListHotProduct(6);
             return View();
         }
 
@@ -31,6 +36,17 @@ namespace OnlineShop.Controllers
         public ActionResult Footer()
         {
             return PartialView();
+        }
+        [HttpPost]
+        public JsonResult UpdateMail(string xemail)
+        {
+            EmailContact email = new EmailContact();
+            email.Email = xemail;
+            var result = new EmailContactDAO().UpdateMail(email);
+            return Json(new
+            {
+                status = result
+            });
         }
     }
 }
