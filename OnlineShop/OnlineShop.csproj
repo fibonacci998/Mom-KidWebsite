@@ -225,12 +225,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Admin\chart\Gruntfile.js" />
-    <Content Include="Assets\Admin\chart\gulpfile.js" />
-    <Content Include="Assets\Admin\chart\nbproject\private\private.xml" />
-    <Content Include="Assets\Admin\chart\nbproject\project.xml" />
-    <Content Include="Assets\Admin\chart\public_html\index.html" />
-    <Content Include="Assets\Admin\chart\public_html\index2.html" />
     <Content Include="Assets\Admin\data\flot-data.js" />
     <Content Include="Assets\Admin\data\morris-data.js" />
     <Content Include="Assets\Admin\dist\css\sb-admin-2.css" />
@@ -2227,11 +2221,6 @@
     <Content Include="Assets\Client\hts-cache\ref\d916aa1a96ba1b887cb09830657a88a9.ref" />
     <Content Include="Assets\Client\hts-cache\ref\f765164814dada4c43fdb7f3429fd7cb.ref" />
     <Content Include="Assets\Client\hts-cache\winprofile.ini" />
-    <Content Include="Assets\Admin\chart\.bowerrc" />
-    <Content Include="Assets\Admin\chart\bower.json" />
-    <Content Include="Assets\Admin\chart\nbproject\private\private.properties" />
-    <Content Include="Assets\Admin\chart\nbproject\project.properties" />
-    <Content Include="Assets\Admin\chart\package.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2264,7 +2253,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Assets\Admin\chart\test\" />
     <Folder Include="Assets\Client\dienquang.com\shopdienquang\css360\" />
     <Folder Include="Assets\Client\vn-live-g-02.slatic.net\images\local_mobile_api\sprites\" />
     <Folder Include="Data\files\" />

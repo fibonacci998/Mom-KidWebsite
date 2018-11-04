@@ -1,5 +1,4 @@
-﻿using Model.Dao;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,8 +11,6 @@ namespace OnlineShop.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
-            var staticDao = new StaticDAO();
-            //ViewBag.Revenue = staticDao.GetStaticRevenueByDate();
             return View();
         }
     }
