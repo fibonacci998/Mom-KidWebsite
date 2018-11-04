@@ -219,6 +219,7 @@
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -981,7 +982,9 @@
     <Content Include="Assets\Admin\vendor\morrisjs\morris.min.js" />
     <Content Include="Assets\Admin\vendor\raphael\raphael.js" />
     <Content Include="Assets\Admin\vendor\raphael\raphael.min.js" />
+    <Content Include="Assets\Client\another\ava.jpg" />
     <Content Include="Assets\Client\another\bocongthuong.png" />
+    <Content Include="Assets\Client\another\cover.png" />
     <Content Include="Assets\Client\cdnjs.cloudflare.com\ajax\libs\slick-carousel\1.8.1\slick.min.js" />
     <Content Include="Assets\Client\chart\Gruntfile.js" />
     <Content Include="Assets\Client\chart\gulpfile.js" />
@@ -2260,6 +2263,8 @@
     <Content Include="Views\Shared\MainMenu.cshtml" />
     <Content Include="Views\Shared\TopMenu.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Product\Category.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

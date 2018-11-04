@@ -19,6 +19,11 @@ namespace Model.Dao
         {
             return db.Products.OrderByDescending(x => x.CreatedDate).Take(top).ToList();
         }
+        public List<Product> ListRelatedProduct(long id)
+        {
+            var product = db.Products.Find(id);
+            return db.Products.Where(x => x.ID!=id && x.CategoryID==product.CategoryID).Take(4).ToList();
+        }
         public List<Product> ListHotProduct(int top)
         {
             return db.Products.Where(x => x.TopHot == true).OrderByDescending(y=>y.CreatedDate).Take(top).ToList();
@@ -35,7 +40,7 @@ namespace Model.Dao
         {
             return db.Products.OrderByDescending(x=>x.ID).ToPagedList(page,pageSize);
         }
-        public Product ViewDetail(int id)
+        public Product ViewDetail(long id)
         {
             return db.Products.Find(id);
         }

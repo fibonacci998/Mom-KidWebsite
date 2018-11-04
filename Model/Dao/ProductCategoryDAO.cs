@@ -19,5 +19,9 @@ namespace Model.Dao
             IQueryable<ProductCategory> list = db.ProductCategories;
             return list;
         }
+        public ProductCategory ViewDetail(long id)
+        {
+            return db.ProductCategories.Find(id);
+        }
     }
 }

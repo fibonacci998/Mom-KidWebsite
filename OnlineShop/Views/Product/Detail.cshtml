@@ -1,0 +1,210 @@
+﻿@model Model.EF.Product
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var category = (Model.EF.ProductCategory)ViewBag.Category;
+    var related = (List<Model.EF.Product>)ViewBag.Related;
+}
+
+<h2>@Model.Name</h2>
+
+<div class="row">
+    <div id="product" class="content-pages" data-sticky_parent>
+
+        <div class="col-lg-12col-md-12 col-sm-12 col-xs-12" data-sticky_column>
+            <div id="wrapper-detail" class="product-page">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div id="surround">
+                            <a class="slide-prev slide-nav" href="javascript:">
+                                <i class="fa fa-arrow-circle-o-left fa-2"></i>
+                            </a>
+                            <a class="slide-next slide-nav" href="javascript:">
+                                <i class="fa fa-arrow-circle-o-right fa-2"></i>
+                            </a>
+                            <img class="product-image-feature" src="@Model.Image">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="product-title">
+                            <h1>@Model.Name</h1>
+                            <span id="pro_sku"><strong>Mã sản phẩm: @Model.Code</strong></span>
+                        </div>
+                        <div class="product-price" id="price-preview">
+
+
+                            <span>
+                                <p style="color: #000000; float:left;font-size:15px;margin-top:4px">
+                                    <strong>
+                                        Giá bán:
+                                    </strong>
+                                </p><strong>@Model.Price ₫</strong>
+                            </span>
+                        </div>
+                        <p>
+
+                        </p>
+
+                        <form id="add-item-form" action="https://shop.dienquang.com/cart/add" method="post" class="variants clearfix">
+                            <div class="select clearfix" style="display:none">
+                                <select id="product-select" name="id" style="display:none">
+
+                                    <option value="1023190820">Default Title - @Model.Price ₫</option>
+
+                                </select>
+                            </div>
+                            <!--<div class="select-wrapper ">
+                            <label>Số lượng</label>
+                            <input id="quantity" type="number" name="quantity" min="1" value="1" class="tc item-quantity" />
+                            </div>-->
+
+                            <div class="row">
+                                <div class="col-xs-12">
+
+                                    <button id="add-to-cart" class=" btn-detail btn-color-add btn-min-width btn-mgt addtocart-modal" name="add">
+                                        Mua ngay
+                                        <br>
+                                        <span style="font-size: 12px; font-weight: 300;">Giao tận nơi hoặc đến Showroom mua hàng</span>
+                                    </button>
+
+                                </div>
+                                <div class="col-xs-12">
+                                    <a style="width: 100%;font-size: 16px; margin-top: 10px;background: transparent !important;color: #ec1c24 !important;padding: 15px;border: 1px solid #ec1c24; " class="btn btn-style btn-style-active btn-transition " title="Gọi ngay">
+                                        <strong>GỌI ĐẶT MUA: 123456789</strong>
+                                    </a>
+                                </div>
+                                <div class="col-xs-12" style="margin-top:15px">
+                                    @{
+                                        var temp = Model.Description;
+                                        foreach (var ii in temp.Split('.'))
+                                        {
+                                            @Html.Raw("● " + ii+ "</br>");
+                                        }
+
+                                    }
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="pt20">
+                            <!-- Begin tags -->
+                            <!-- End tags -->
+                        </div>
+
+                        <div class="pt20">
+                            <!-- Begin social icons -->
+                            <div class="addthis_toolbox social-sharing addthis_default_style ">
+                                <div class="social-media" data-permalink="am-dun-nuoc-sieu-toc-dien-quang-dq-ekt03-1815-1800-1-5l-than-nhua.html">
+                                    <label>Chia sẻ: </label>
+                                    <a target="_blank" href="http://www.facebook.com/sharer.php?u=https://shop.dienquang.com/products/am-dun-nuoc-sieu-toc-dien-quang-dq-ekt03-1815-1800-1-5l-than-nhua" class="btn-transition btn-border-hover share-facebook" title="Chia sẻ lên Facebook">
+                                        <i class="fa fa-facebook-official"></i>
+                                    </a>
+                                    <a target="_blank" href="http://twitter.com/share?text=%e1%ba%a4m%20%c4%91un%20n%c6%b0%e1%bb%9bc%20si%c3%aau%20t%e1%bb%91c%20%c4%90i%e1%bb%87n%20Quang%20%c4%90Q%20EKT03%201815%20(1800,1.5L,th%c3%a2n%20nh%e1%bb%b1a)&amp;url=https://shop.dienquang.com/products/am-dun-nuoc-sieu-toc-dien-quang-dq-ekt03-1815-1800-1-5l-than-nhua" class="btn-transition btn-border-hover share-twitter" class="share-twitter" title="Chia sẻ lên Twitter">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                    <a target="_blank" href="http://plus.google.com/share?url=https://shop.dienquang.com/products/am-dun-nuoc-sieu-toc-dien-quang-dq-ekt03-1815-1800-1-5l-than-nhua" class="btn-transition btn-border-hover share-google" title="+1">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- End social icons -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12  list-like">
+                <div id="like">
+                    <div class="title-like">
+                        <h2>Sản phẩm liên quan</h2>
+                    </div>
+                    <div class="row product-list ">
+                        <div class="content-product-list">
+                            @foreach (var item in related)
+                            {
+                                <div class="col-md-3 col-sm-6 col-xs-12 pro-loop">
+
+                                    <div class="product-block">
+
+                                        <div class="product-img image-resize view view-third">
+
+                                            <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                <img class="first-image " src="@item.Image" />
+
+                                            </a>
+                                            <div class="actionss">
+
+                                                <div class="btn-cart-products">
+                                                    <a href="#">
+                                                        Mua ngay
+                                                    </a>
+                                                </div>
+
+                                                <div class="btn-quickview-products">
+
+                                                    <a href="#">
+                                                        Xem nhanh
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-detail clearfix" style="text-align:left">
+
+                                            <!-- sử dụng pull-left -->
+                                            <h3 class="pro-name"><a href="/chi-tiet/@item.MetaTitle-@item.ID">@item.Name</a></h3>
+
+                                            <div class="pro-prices">
+                                                <strong><p class="pro-price">@item.Price ₫</p><br /></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                           
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            if ($(".slides .product-thumb").length > 4) {
+                $('#sliderproduct').flexslider({
+                    animation: "slide",
+                    controlNav: false,
+                    animationLoop: false,
+                    slideshow: false,
+                    itemWidth: 95,
+                    itemMargin: 10,
+                });
+            }
+            if ($(window).width() > 960) {
+                jQuery(".product-image-feature").elevateZoom({
+                    gallery: 'sliderproduct',
+                    scrollZoom: true
+                });
+            } else {
+
+            }
+            jQuery('.slide-next').click(function () {
+                if ($(".product-thumb.active").prev().length > 0) {
+                    $(".product-thumb.active").prev().find('img').click();
+                }
+                else {
+                    $(".product-thumb:last img").click();
+                }
+            });
+            jQuery('.slide-prev').click(function () {
+                if ($(".product-thumb.active").next().length > 0) {
+                    $(".product-thumb.active").next().find('img').click();
+                }
+                else {
+                    $(".product-thumb:first img").click();
+                }
+            });
+        });
+    </script>
+
+</div>
