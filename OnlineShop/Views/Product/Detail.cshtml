@@ -38,7 +38,7 @@
                                     <strong>
                                         Giá bán:
                                     </strong>
-                                </p><strong>@Model.Price ₫</strong>
+                                </p><strong>@(Model.Price.GetValueOrDefault(0).ToString("N0")) ₫</strong>
                             </span>
                         </div>
                         <p>

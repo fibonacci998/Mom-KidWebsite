@@ -285,7 +285,7 @@
                 <div class="topmiddle hidden-xs" id="topheader">
                     <div class="row" style="display: block;">
                         <div class="col-md-5 col-sm-4 text-left" style="margin-left: 15px;">
-                            <a href="index.html" class="logo-wrapper">
+                            <a href="/" rel="nofollow" class="logo-wrapper">
                                 <img src="~/Assets/Client/another/cover.png" alt="logo ">
                             </a>
                         </div>
@@ -296,10 +296,7 @@
                             <span class="col-sm-4 text-white text-right">
                                 <div class="mini-cart text-right">
                                     <div class="cart-info hidden-xs">
-                                        <a class="cart-link" href="cart.html">
-                                            Giỏ hàng
-                                            (<span class="cart-number">0</span>) <i class="fa fa-shopping-bag fa-lg fa-bag" aria-hidden="true"></i>
-                                        </a>
+                                        @{ Html.RenderAction("HeaderCart", "Home");}  
                                     </div>
                                 </div>
                             </span>

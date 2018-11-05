@@ -212,17 +212,20 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderDetailController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Common\CommonConstants.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\UserLogin.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1080,6 +1083,7 @@
     <Content Include="Assets\Client\hstatic.net\0\0\global\option_selection.js" />
     <Content Include="Assets\Client\hts-cache\new.txt" />
     <Content Include="Assets\Client\hts-cache\readme.txt" />
+    <Content Include="Assets\Client\js\controller\cartController.js" />
     <Content Include="Assets\Client\js\controller\emailController.js" />
     <Content Include="Assets\Client\product.hstatic.net\1000253446\product\0.6m_9w_daylight_12v_ch_p_nh_a_m__ledtu04_09765_large.jpg" />
     <Content Include="Assets\Client\product.hstatic.net\1000253446\product\01__5w__daylight__3.5_inch__k_t_n_i_bluetooth__di_u_khi_n_s_c_m_u_rgb_.jpg" />
@@ -2113,6 +2117,7 @@
     <Content Include="Assets\Client\theme.hstatic.net\1000253446\1000408152\14\slideshow_130f4.jpg" />
     <Content Include="Assets\Client\theme.hstatic.net\1000253446\1000408152\14\slideshow_230f4.jpg" />
     <Content Include="Assets\Client\theme.hstatic.net\1000253446\1000408152\14\styles30f4.css" />
+    <Content Include="Assets\Client\theme.hstatic.net\1000253446\1000408152\14\styles.css" />
     <Content Include="Assets\Client\theme.hstatic.net\1000253446\1000408152\14\thong-tin-mua-hang30f4.png" />
     <Content Include="Assets\Client\www.google-analytics.com\analytics.js" />
     <Content Include="Content\PagedList.css" />
@@ -2265,16 +2270,18 @@
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Product\Category.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Shared\HeaderCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="Areas\Admin\Views\OrderDetail\" />
     <Folder Include="Assets\Client\chart\test\" />
     <Folder Include="Assets\Client\dienquang.com\shopdienquang\css360\" />
     <Folder Include="Assets\Client\vn-live-g-02.slatic.net\images\local_mobile_api\sprites\" />
     <Folder Include="Data\files\" />
     <Folder Include="Data\flash\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
