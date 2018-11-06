@@ -56,15 +56,18 @@
                                                 </a>
                                             </td>
                                             <td style="text-align:right; color:red;">
-                                                <strong>@item.Product.Price.GetValueOrDefault(0).ToString("N0") ₫</strong>
+                                                <strong>
+                                                    @item.Product.Price.GetValueOrDefault(0).ToString("N0") ₫
+                                                </strong>
                                             </td>
                                             <td class="qty">
-                                                <input type="number" class="tc item-quantity txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" />
+                                                <input type="number" class="tc item-quantity txtQuantity" data-id="@item.Product.ID" id="txt-quantity" onchange="updatePrice()" value="@item.Quantity" />
                                             </td>
                                             <td class="price" style="color:red;">
-                                                <strong>
+                                                <strong id="total-price">
                                                     @((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0")) ₫
                                                 </strong>
+                                                
                                             </td>
                                             <td class="remove">
                                                 <a href="#" class="cart btn-delete" data-id="@item.Product.ID">Xóa</a>
@@ -88,9 +91,9 @@
                                                     <div class="">
                                                         <a class="btn_add" id="btnContinue">Mua thêm</a>
                                                     </div>
-                                                    <div class="">
+                                                    @*<div class="">
                                                         <a class="btn_add" id="btnUpdate">Cập nhật</a>
-                                                    </div>
+                                                    </div>*@
                                                     <div class="">
                                                         <a id="delete_cart" class="btn_add " href="/cart/clear">Xóa giỏ hàng</a>
                                                     </div>

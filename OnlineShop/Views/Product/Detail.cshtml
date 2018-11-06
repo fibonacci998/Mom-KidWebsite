@@ -188,22 +188,6 @@
             } else {
 
             }
-            jQuery('.slide-next').click(function () {
-                if ($(".product-thumb.active").prev().length > 0) {
-                    $(".product-thumb.active").prev().find('img').click();
-                }
-                else {
-                    $(".product-thumb:last img").click();
-                }
-            });
-            jQuery('.slide-prev').click(function () {
-                if ($(".product-thumb.active").next().length > 0) {
-                    $(".product-thumb.active").next().find('img').click();
-                }
-                else {
-                    $(".product-thumb:first img").click();
-                }
-            });
         });
     </script>
 
