@@ -6,6 +6,11 @@
         $('#btnContinue').off('click').on('click', function () {
             window.location.href = "/";
         });
+        $('#btn_payment').off('click').on('click', function (e) {
+            e.preventDefault();
+            window.location.href = "/thanh-toan";
+        });
+        
         $('#btnUpdate').off('click').on('click', function () {
             var listProduct = $('.txtQuantity');
             var cartList = [];

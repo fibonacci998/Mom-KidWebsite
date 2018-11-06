@@ -63,6 +63,7 @@
     <Compile Include="Dao\EmailContactDAO.cs" />
     <Compile Include="Dao\MenuDAO.cs" />
     <Compile Include="Dao\OrderDAO.cs" />
+    <Compile Include="Dao\OrderDetailDAO.cs" />
     <Compile Include="Dao\ProductCategoryDAO.cs" />
     <Compile Include="Dao\ProductDAO.cs" />
     <Compile Include="Dao\SlideDAO.cs" />
@@ -98,9 +99,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CustomModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,5 +1,6 @@
 namespace Model.EF
 {
+    using Dao;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -22,5 +23,7 @@ namespace Model.EF
         public int? Quantity { get; set; }
 
         public decimal? Price { get; set; }
+
+        public Product product { get { return new ProductDAO().ViewDetail(ProductID); } set { } }
     }
 }

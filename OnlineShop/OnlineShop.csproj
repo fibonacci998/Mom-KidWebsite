@@ -1161,6 +1161,7 @@
     <Content Include="Assets\Client\bootstrap\design\member\fonts-master\apache\roboto\roboto-regular.ttf" />
     <Content Include="Assets\Client\bootstrap\design\member\fonts-master\apache\roboto\roboto-thin.ttf" />
     <Content Include="Assets\Client\bootstrap\design\member\fonts-master\apache\roboto\roboto-thinitalic.ttf" />
+    <Content Include="Areas\Admin\Views\OrderDetail\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1193,11 +1194,12 @@
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Shared\HeaderCart.cshtml" />
+    <Content Include="Views\Cart\Payment.cshtml" />
+    <Content Include="Views\Cart\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Areas\Admin\Views\OrderDetail\" />
     <Folder Include="Assets\Client\chart\test\" />
     <Folder Include="Data\files\" />
     <Folder Include="Data\flash\" />
