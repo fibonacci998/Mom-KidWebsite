@@ -63,7 +63,6 @@
     }
 }
 cart.init();
-
 $('#txt-quantity').change(function () {
     //var quantity = Number($(this).val());
 
@@ -86,7 +85,7 @@ $('#txt-quantity').change(function () {
         type: 'POST',
         success: function (res) {
             if (res.status == true) {
-                window.location.href = "/gio-hang";
+                window.location.replace("/gio-hang");
             }
         }
     })
@@ -95,4 +94,5 @@ function updatePrice(val) {
     $('#txt-quantity').val = val;
     $('#txt-quantity').trigger('change');
 }
+
 

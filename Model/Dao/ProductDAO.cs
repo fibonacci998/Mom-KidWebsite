@@ -24,6 +24,12 @@ namespace Model.Dao
             var product = db.Products.Find(id);
             return db.Products.Where(x => x.ID!=id && x.CategoryID==product.CategoryID).Take(4).ToList();
         }
+
+        public List<Product> listByCategoryId(long categoryId)
+        {
+            return db.Products.Where(x => x.CategoryID == categoryId).ToList();
+        }
+
         public List<Product> ListHotProduct(int top)
         {
             return db.Products.Where(x => x.TopHot == true).OrderByDescending(y=>y.CreatedDate).Take(top).ToList();

@@ -1,8 +1,2865 @@
-﻿@model Model.EF.ProductCategory
+﻿@model List<Model.EF.Product>
 @{
-    ViewBag.Title = Model.Name;
+    var category = (Model.EF.ProductCategory)ViewBag.Category;
+    ViewBag.Title = category.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    jQuery(function () {
+        jQuery('#slider-container').slider({
+            range: true,
+            min: 0,
+            max: 10000000,
+            values: [1, 10000000],
+            create: function () {
+                jQuery("#amount").val("0 đ - 10,000,000 đ");
+            },
+            slide: function (event, ui) {
+                $("#amount").val(numberWithCommas(ui.values[0]) + " đ- " + numberWithCommas(ui.values[1]) + " đ");
+                var price_min = '';
+                var arr_price_min = numberWithCommas(ui.values[0]);
+                $.each(arr_price_min.split(','), function (i, v) {
+                    price_min = price_min + v;
+                });
+                $('#amount-min').val('(price:product>=' + parseInt(price_min) + ')');
+                var price_max = '';
+                var arr_price_max = numberWithCommas(ui.values[1]);
+                $.each(arr_price_max.split(','), function (i, v) {
+                    price_max = price_max + v;
+                });
+                $('#amount-max').val('(price:product<=' + parseInt(price_max) + ')');
+                var mi = ui.values[0];
+                var mx = ui.values[1];
+                filterSystem(mi, mx);
+            },
+            stop: function (event, ui) {
+                $.ajax({
+                    url: genQuery() + '&view=pagesize',
+                    success: function (data) {
+                        total_page = parseInt(data);
+                    }
+                });
+                //lay trang dau tien
+                $.ajax({
+                    url: genQuery() + '&view=data',
+                    success: function (data) {
+                        $('.pw-default').remove();
+                        $('.products-grid').html('');
+                        $('.empty').remove();
+                        $('.products-grid').append(data);
+                        $('.products-grid img').imagesLoaded(function () {
+                            $(window).resize();
+                        });
+                    }
+                });
+            }
+        })
+    });
+</script>
+<div class="row">
+    <div id="collection" class="content-pages collection-page" data-sticky_parent>
 
-<h2>@Model.Name</h2>
+        <div class="content-col col-md-12 col-sm-12 col-xs-12" data-sticky_column>
+            <div class="row">
+                <div class="main-content">
+                    <div class="col-md-12 hidden-sm hidden-xs">
+                        <div class="sort-collection">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <h1>
+                                        @category.Name
+                                    </h1>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 content-product-list">
+                        <div class="product-list products-grid">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+                                    <div class="product-block">
+
+                                        <div class="product-img image-resize view view-third">
+
+                                            <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                <img class="first-image " src="@item.Image" />
+
+                                            </a>
+                                            <div class="actionss">
+
+                                                <div class="btn-cart-products">
+                                                    <a href="/them-gio-hang?productId=@item.ID&quantity=1">
+                                                        Mua ngay
+                                                    </a>
+                                                </div>
+
+                                                <div class="btn-quickview-products">
+
+                                                    <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                        Xem nhanh
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-detail clearfix" style="text-align:left">
+
+                                            <h3 class="pro-name">
+                                                <a href="">@item.Name </a>
+                                            </h3>
+
+                                            <div class="pro-prices">
+                                                <strong><p class="pro-price">@item.Price.GetValueOrDefault().ToString("N0") ₫</p><br /></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                        <div class="clearfix">
+                            <div id="pagination" class="">
+
+                                <div class="col-lg-2 col-md-2 col-sm-3 hidden-xs">
+
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center">
+
+
+
+                                    <span class="page-node current">1</span>
+
+
+
+                                    <a class="page-node" href="led-bulb-csn4658.html?page=2">2</a>
+
+
+
+                                    <a class="page-node" href="led-bulb-csn9ba9?page=3">3</a>
+
+
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-3 hidden-xs">
+
+                                    <a class="pull-right next fa fa-angle-right" href="led-bulb-csn4658.html?page=2"><span>Trang sau</span></a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="collection" class="content-pages collection-page" data-sticky_parent="">
+
+    <!-- Begin collection info -->
+    <!-- Content-->
+    <div class="col-lg-12 visible-sm visible-xs">
+        <div class="visible-sm visible-xs">
+            <h1 class="title-sm">
+                LED Bulb CSN
+            </h1>
+        </div>
+
+        <div class="filter-by-wrapper">
+            <div class="filter-by">
+
+                <div class="sort-filter-option navbar-inactive" id="navbar-inner">
+                    <div class="filterBtn txtLeft btn-navbar-collection">
+                        <span class="list-coll">
+                            <i class="fa fa-server" aria-hidden="true"></i>
+                            Danh mục
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="sort-filter-option js-promoteTooltip">
+                    <div class="filterBtn txtLeft showOverlay">
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                        <span class="custom-dropdown custom-dropdown--white">
+                            <select class="sort-by custom-dropdown__select custom-dropdown__select--white">
+
+                                <option value="manual">Sản phẩm nổi bật</option>
+
+                                <option value="price-ascending">Giá: Tăng dần</option>
+                                <option value="price-descending">Giá: Giảm dần</option>
+                                <option value="title-ascending">Tên: A-Z</option>
+                                <option value="title-descending">Tên: Z-A</option>
+                                <option value="created-ascending">Cũ nhất</option>
+                                <option value="created-descending">Mới nhất</option>
+                                <option value="best-selling">Bán chạy nhất</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class=" col-md-3 col-sm-12 col-xs-12 leftsidebar-col" data-sticky_column="">
+        <div class="group_sidebar">
+
+            <div class="list-group navbar-inner ">
+
+
+                <div class="mega-left-title btn-navbar title-hidden-sm">
+                    <h3 class="sb-title">Danh mục </h3>
+                </div>
+
+                <ul class="nav navs sidebar menu" id="cssmenu">
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  first">
+                        <a href="den-tube.html">
+                            <span class="lbl">Đèn Tube</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-1" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-1">
+
+
+                            <li class="first">
+                                <a href="led-tuyp.html" title="LED Tube">
+                                    <span>LED Tube</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="den-huynh-quang.html" title="Đèn Huỳnh quang">
+                                    <span>Đèn Huỳnh quang</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub active ">
+                        <a href="den-led-bulb.html">
+                            <span class="lbl">Đèn LED Bulb</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-2" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-2">
+
+
+                            <li class="first">
+                                <a href="led-bulb-csl.html" title="Đèn LED Bulb CSL">
+                                    <span>Đèn LED Bulb CSL</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last current active">
+                                <a href="led-bulb-csn.html" title="Đèn LED Bulb CSN">
+                                    <span>Đèn LED Bulb CSN</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="double-wing.html">
+                            <span class="lbl">Double Wing</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-3" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-3">
+
+
+                            <li class="first">
+                                <a href="bo-den-double-wing.html" title="Bộ đèn DoubleWing">
+                                    <span>Bộ đèn DoubleWing</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="led-double-wing.html" title="LED DoubleWing">
+                                    <span>LED DoubleWing</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="den-tran-led.html">
+                            <span class="lbl">Đèn LED Âm Trần</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-4" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-4">
+
+
+                            <li class="first">
+                                <a href="led-downlight.html" title="LED Downlight">
+                                    <span>LED Downlight</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="led-panel.html" title="LED Panel">
+                                    <span>LED Panel</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="led-op-tran.html" title="LED Ốp trần">
+                                    <span>LED Ốp trần</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="den-led-khac.html">
+                            <span class="lbl">Đèn LED Khác</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-5" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-5">
+
+
+                            <li class="firstlast">
+                                <a href="led-pha.html" title="LED Pha">
+                                    <span>LED Pha</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="den-compact.html">
+                            <span class="lbl">Đèn Compact</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-6" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-6">
+
+
+                            <li class="first">
+                                <a href="den-compact-csn.html" title="Đèn Compact CSN">
+                                    <span>Đèn Compact CSN</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-compact-csl.html" title="Đèn Compact CSL">
+                                    <span>Đèn Compact CSL</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-compact-xoan.html" title="Đèn Compact Xoắn">
+                                    <span>Đèn Compact Xoắn</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="den-compact-chong-am.html" title="Đèn Compact Chống Ẩm">
+                                    <span>Đèn Compact Chống Ẩm</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="san-pham-dien-gia-dung.html">
+                            <span class="lbl">Sản Phẩm Điện Gia Dụng</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-7" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-7">
+
+
+                            <li class="first">
+                                <a href="quat-dien.html" title="Quạt Điện">
+                                    <span>Quạt Điện</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="am-dun-nuoc.html" title="Ấm Đun Nước">
+                                    <span>Ấm Đun Nước</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="vot-muoi.html" title="Vợt Muỗi">
+                                    <span>Vợt Muỗi</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-pin-1.html" title="Đèn Pin Sạc">
+                                    <span>Đèn Pin Sạc</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-pin-doi-dau.html" title="Đèn Pin Đội Đầu">
+                                    <span>Đèn Pin Đội Đầu</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-bat-muoi.html" title="Đèn Bắt Muỗi">
+                                    <span>Đèn Bắt Muỗi</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="but-thu-dien.html" title="Bút Thử Điện">
+                                    <span>Bút Thử Điện</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="tu-dien.html" title="Tủ Điện">
+                                    <span>Tủ Điện</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-suoi.html" title="Đèn Sưởi">
+                                    <span>Đèn Sưởi</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="den-sac-led-1.html" title="Đèn Sạc LED">
+                                    <span>Đèn Sạc LED</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="o-cam-va-phich-cam.html">
+                            <span class="lbl">Ổ Cắm, Phích Cắm</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-8" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-8">
+
+
+                            <li class="first">
+                                <a href="o-cam-xoay-90.html" title="Ổ Cắm Xoay 90°">
+                                    <span>Ổ Cắm Xoay 90°</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="o-cam.html" title="Ổ Cắm">
+                                    <span>Ổ Cắm</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="o-cam-dien-quang-eco.html" title="Ổ Cắm ECO">
+                                    <span>Ổ Cắm ECO</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="o-cam-csl.html" title="Ổ Cắm CSL">
+                                    <span>Ổ Cắm CSL</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="phich-cam.html" title="Phích Cắm">
+                                    <span>Phích Cắm</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="day-noi-dai.html" title="Dây Nối Dài">
+                                    <span>Dây Nối Dài</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="den-ban-va-den-ngu.html">
+                            <span class="lbl">Đèn Bàn, Đèn Ngủ</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-9" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-9">
+
+
+                            <li class="first">
+                                <a href="den-ban-led.html" title="Đèn Bàn LED Cao Cấp">
+                                    <span>Đèn Bàn LED Cao Cấp</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-ban.html" title="Đèn Bàn LED">
+                                    <span>Đèn Bàn LED</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="den-ngu-cam-bien.html" title="Đèn Ngủ Cảm Biến">
+                                    <span>Đèn Ngủ Cảm Biến</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="den-trang-tri.html">
+                            <span class="lbl">Đèn Trang Trí</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-10" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-10">
+
+
+                            <li class="first">
+                                <a href="led-nen.html" title="LED Nến">
+                                    <span>LED Nến</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="led-day.html" title="LED Dây">
+                                    <span>LED Dây</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="led-hat-tuong.html" title="LED Hắt Tường">
+                                    <span>LED Hắt Tường</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-ngu-trang-tri.html" title="Đèn Gốm Sứ">
+                                    <span>Đèn Gốm Sứ</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="den-thuy-tinh.html" title="Đèn Thuỷ Tinh">
+                                    <span>Đèn Thuỷ Tinh</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="den-treo-trang-tri.html" title="Đèn Treo Trang Trí">
+                                    <span>Đèn Treo Trang Trí</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  ">
+                        <a href="vat-tu-den.html">
+                            <span class="lbl">Vật Tư Đèn</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-11" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-11">
+
+
+                            <li class="first">
+                                <a href="choa-den.html" title="Choá Đèn">
+                                    <span>Choá Đèn</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="chuoi-den.html" title="Chuôi Đèn">
+                                    <span>Chuôi Đèn</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="ballast-tu.html" title="Ballast Từ">
+                                    <span>Ballast Từ</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="">
+                                <a href="ballast-dien-tu.html" title="Ballast Điện Từ">
+                                    <span>Ballast Điện Từ</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="kich-dien.html" title="Kích Điện">
+                                    <span>Kích Điện</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="item has-sub  last">
+                        <a href="index.html">
+                            <span class="lbl">Chiếu Sáng Thông Minh</span>
+                            <span data-toggle="collapse" data-parent="#cssmenu" href="#sub-item-12" class="sign drop-down">
+
+                            </span>
+                        </a>
+                        <ul class="nav children collapse" id="sub-item-12">
+
+
+                            <li class="first">
+                                <a href="den-led-bulb-thong-minh-dien-quang-apollo.html" title="Đèn LED Bulb Thông Minh">
+                                    <span>Đèn LED Bulb Thông Minh</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="last">
+                                <a href="bo-den-led-downlight-thong-minh-dien-quang-apollo.html" title="Bộ Đèn LED Downlight Thông Minh">
+                                    <span>Bộ Đèn LED Downlight Thông Minh</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+                </ul>
+
+                <!-- Sidebar menu-->
+                <div class="wrap-in">
+                    <nav class="" id="top-nav-collec" role="navigation">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="block sns-snsproductspecials sns-productlist margin-repon" id="layered_block_left" style="height: auto;">
+                                    <div class="slider-inner">
+                                        <div type="button" class="collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+                                            <span class="sr-only">Toggle navigation</span>
+                                            <div class=" ">
+                                                <p class="title_block">Tìm theo</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="navbar-collapse collapse" style="border-top-style: none; height: 0px;" id="bs-example-navbar-collapse-2" aria-expanded="false">
+                                        <div class="row">
+                                            <div class="block-title hidden-xs">
+                                                <h3>
+                                                    BỘ LỌC SẢN PHẨM
+                                                </h3>
+                                            </div>
+
+                                            <div class="block-content clearfix">
+                                                <div class="col-lg-12 " id="repontop-bor">
+                                                    <div class="filter-collection layered_filter">
+                                                        <p id="filter-heading" class="layered_subtitle">
+                                                            Loại Sản Phẩm <i class="fa fa-chevron-down loaispcl" data-id="loaisp" style="float:right"></i> <i style="float: right; display: none;" class="fa fa-chevron-up loaisp" data-id="loaispcl"></i>
+                                                        </p>
+                                                        <div class="row div_show_filter div_loaisp div_loaispcl" style="display: none;">
+                                                            <ul id="filter-category">
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**SHOP ĐIỆN QUANG)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>SHOP ĐIỆN QUANG</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**ĐÈN LED)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>ĐÈN LED</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**Khác)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Khác</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**Ổ CẮM, PHÍCH CẮM)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Ổ CẮM, PHÍCH CẮM</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**ĐÈN COMPACT)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>ĐÈN COMPACT</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**ĐÈN BÀN CÁC LOẠI)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>ĐÈN BÀN CÁC LOẠI</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**ĐÈN ỐP TRẦN)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>ĐÈN ỐP TRẦN</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**CHÓA)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>CHÓA</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**BỘ ĐÈN DOUBLEWINGS)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>BỘ ĐÈN DOUBLEWINGS</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**LED TUBE)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED TUBE</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**BỘ MÁNG DÂN DỤNG)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>BỘ MÁNG DÂN DỤNG</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**Danh mục mặc định)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Danh mục mặc định</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**Đèn pin)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Đèn pin</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**ĐÈN TRANG TRÍ)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>ĐÈN TRANG TRÍ</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**QUẠT ĐIỆN QUANG CÁC LOẠI)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>QUẠT ĐIỆN QUANG CÁC LOẠI</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**ĐÈN HUỲNH QUANG)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>ĐÈN HUỲNH QUANG</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**LED HẮT TƯỜNG)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED HẮT TƯỜNG</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**LED MICA)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED MICA</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**ĐÈN KHẨN CẤP)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>ĐÈN KHẨN CẤP</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**Đèn sạc)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Đèn sạc</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**ẤM ĐUN NƯỚC)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>ẤM ĐUN NƯỚC</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**LED dây)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED dây</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**STARTER, CHUÔI ĐÈN)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>STARTER, CHUÔI ĐÈN</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**BALLAST TỪ)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>BALLAST TỪ</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**LED bulb)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED bulb</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**LED chiếu điểm)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED chiếu điểm</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**Đèn Pin Đội Đầu)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Đèn Pin Đội Đầu</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**BALLAST ĐIỆN TỬ)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>BALLAST ĐIỆN TỬ</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**Bút thử điện)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Bút thử điện</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**Đèn sưởi)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Đèn sưởi</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**LED Panel)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED Panel</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(product_type:product**LED pha)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED pha</span>
+                                                                    </label>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 " id="repontop-bor">
+                                                    <div class="filter-collection layered_filter">
+                                                        <p id="filter-heading" class="layered_subtitle">
+                                                            Thương Hiệu <i class="fa fa-chevron-down thuonghieucl" data-id="thuonghieu" style="float:right"></i> <i style="float: right; display: none;" class="fa fa-chevron-up thuonghieu" data-id="thuonghieucl"></i>
+                                                        </p>
+                                                        <div class="row div_show_filter div_thuonghieu div_thuonghieucl" style="display: none;">
+                                                            <ul id="filter-category">
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**DDSmart-2301)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>DDSmart-2301</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**DDSmart-2335)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>DDSmart-2335</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**Online)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Online</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**30W)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>30W</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**CSL)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>CSL</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**daylight)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>daylight</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**LED bulb)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>LED bulb</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**9W)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>9W</span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(tag:product**bán chạy)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>bán chạy</span>
+                                                                    </label>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 " id="repontop-bor">
+                                                    <div class="filter-collection layered_filter">
+                                                        <p id="filter-heading" class="layered_subtitle">
+                                                            Xuất Xứ <i class="fa fa-chevron-down xuatxucl" data-id="xuatxu" style="float:right"></i> <i style="float: right; display: none;" class="fa fa-chevron-up xuatxu" data-id="xuatxucl"></i>
+                                                        </p>
+                                                        <div class="row div_show_filter div_xuatxu div_xuatxucl" style="display: none;">
+                                                            <ul id="filter-category">
+
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(vendor:product**Điện Quang)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Điện Quang</span>
+                                                                    </label>
+                                                                </li>
+
+
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(vendor:product**Khác)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Khác</span>
+                                                                    </label>
+                                                                </li>
+
+
+
+                                                                <li class="col-lg-12">
+                                                                    <label>
+                                                                        <input class="le-checkbox" type="checkbox" id="input-check" value="(vendor:product**Điện Quang Lamp)">
+                                                                        <i class="fake-box"></i>
+                                                                        <span>Điện Quang Lamp</span>
+                                                                    </label>
+                                                                </li>
+
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="filter-collection layered_filter clearfix">
+                                                        <p class="layered_subtitle">Giá </p>
+                                                        <aside class="widget widget_product_price_slide">
+                                                            <div id="slider-container" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 1e-05%; width: 100%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 1e-05%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 100%;"></span></div>
+                                                            <input disabled="" type="text" id="amount">
+                                                            <input type="hidden" id="amount-min">
+                                                            <input type="hidden" id="amount-max">
+                                                        </aside>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                </div>
+ 
+
+
+
+            </div>
+            <!-- Banner quảng cáo -->
+            <div class="list-group_l banner-left hidden-sm hidden-xs">
+
+            </div>
+        </div>
+        <script>
+
+
+$("#list-group-l ul.navs li.active").parents('ul.children').addClass("in");
+        </script>
+        <script src="../../code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script>
+            jQuery(function () {
+                jQuery('#slider-container').slider({
+                    range: true,
+                    min: 0,
+                    max: 10000000,
+                    values: [1, 10000000],
+                    create: function () {
+                        jQuery("#amount").val("0 đ - 10,000,000 đ");
+                    },
+                    slide: function (event, ui) {
+                        $("#amount").val(numberWithCommas(ui.values[0]) + " đ- " + numberWithCommas(ui.values[1]) + " đ");
+                        var price_min = '';
+                        var arr_price_min = numberWithCommas(ui.values[0]);
+                        $.each(arr_price_min.split(','), function (i, v) {
+                            price_min = price_min + v;
+                        });
+                        $('#amount-min').val('(price:product>=' + parseInt(price_min) + ')');
+                        var price_max = '';
+                        var arr_price_max = numberWithCommas(ui.values[1]);
+                        $.each(arr_price_max.split(','), function (i, v) {
+                            price_max = price_max + v;
+                        });
+                        $('#amount-max').val('(price:product<=' + parseInt(price_max) + ')');
+                        var mi = ui.values[0];
+                        var mx = ui.values[1];
+                        filterSystem(mi, mx);
+                    },
+                    stop: function (event, ui) {
+                        $.ajax({
+                            url: genQuery() + '&view=pagesize',
+                            success: function (data) {
+                                total_page = parseInt(data);
+                            }
+                        });
+                        //lay trang dau tien
+                        $.ajax({
+                            url: genQuery() + '&view=data',
+                            success: function (data) {
+                                $('.pw-default').remove();
+                                $('.products-grid').html('');
+                                $('.empty').remove();
+                                $('.products-grid').append(data);
+                                $('.products-grid img').imagesLoaded(function () {
+                                    $(window).resize();
+                                });
+                            }
+                        });
+                    }
+                })
+            });
+            
+        </script>
+    </div>
+    <div class="content-col col-md-9 col-sm-12 col-xs-12" data-sticky_column="">
+        <div class="row">
+            <div class="main-content">
+                <div class="col-md-12 hidden-sm hidden-xs">
+                    <div class="sort-collection">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <h1>
+                                    LED Bulb CSN
+                                </h1>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+
+                                <div class="browse-tags">
+                                    <span>Sắp xếp theo:</span>
+                                    <span class="custom-dropdown custom-dropdown--white">
+                                        <select class="sort-by custom-dropdown__select custom-dropdown__select--white">
+
+                                            <option value="manual">Sản phẩm nổi bật</option>
+
+                                            <option value="price-ascending">Giá: Tăng dần</option>
+                                            <option value="price-descending">Giá: Giảm dần</option>
+                                            <option value="title-ascending">Tên: A-Z</option>
+                                            <option value="title-descending">Tên: Z-A</option>
+                                            <option value="created-ascending">Cũ nhất</option>
+                                            <option value="created-descending">Mới nhất</option>
+                                            <option value="best-selling">Bán chạy nhất</option>
+                                        </select>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 col-sm-12 col-xs-12 content-product-list">
+                    <div class="product-list products-grid">
+
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01v-1w-tim" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01V (1W Tím)">
+                                        <img class="first-image " alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01V (1W Tím) " src="../../product.hstatic.net/1000253446/product/d_n_led_bulb_di_n_quang_dq_ledbu14g45_01v__1w_tim__large.jpg">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191642)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01v-1w-tim">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-dien-quang-dq-ledbu14g45-01v-1w-tim" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01V (1W Tím)">Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01V (1W Tím) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">24,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063493">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01r-1w-do.html" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01R (1W đỏ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01R (1W đỏ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu14g45_01r__1w_d___57de16b6417b4de3b90366ebd416e962_large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/dq_ledbu14g45_01r__1w_d___large.jpg" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01R (1W đỏ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191641)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01r-1w-do.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-dien-quang-dq-ledbu14g45-01r-1w-do.html" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01R (1W đỏ)">Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01R (1W đỏ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">24,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063492">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01g-1w-xanh-la.html" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01G (1W xanh lá)">
+                                        <img class="first-image  has-img" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01G (1W xanh lá) " src="../../product.hstatic.net/1000253446/product/dq_ledbu14g45_01g__1w_xanh_l___b3d48476519b4a46844ff4fabc5082ce_large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/dq_ledbu14g45_01g__1w_xanh_l___large.jpg" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01G (1W xanh lá) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191640)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01g-1w-xanh-la.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-dien-quang-dq-ledbu14g45-01g-1w-xanh-la" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01G (1W xanh lá)">Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01G (1W xanh lá) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">24,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063491">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01b-1w-xanh-duong" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01B (1W xanh dương)">
+                                        <img class="first-image  has-img" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01B (1W xanh dương) " src="../../product.hstatic.net/1000253446/product/dq_ledbu14g45_01b__1w_xanh_d__ng__97824d58c73d4b8f8f2e6e54eb7115b2_large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/dq_ledbu14g45_01b__1w_xanh_d__ng__large.jpg" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01B (1W xanh dương) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191639)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01b-1w-xanh-duong">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-dien-quang-dq-ledbu14g45-01b-1w-xanh-duong.html" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01B (1W xanh dương)">Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01B (1W xanh dương) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">24,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063490">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01765-1w-daylight-chup-mo.html" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01765 (1W daylight, chụp mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01765 (1W daylight, chụp mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu14g45_01765__1w_daylight__ch_p_m___large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_b2d2f34eaf7448f4845b5f3abb4b5904_large.jpg" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01765 (1W daylight, chụp mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191638)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01765-1w-daylight-chup-mo.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-dien-quang-dq-ledbu14g45-01765-1w-daylight-chup-mo" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01765 (1W daylight, chụp mờ)">Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01765 (1W daylight, chụp mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">24,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063489">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01727-1w-warmwhite-chup-mo.html" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01727 (1W warmwhite, chụp mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01727 (1W warmwhite, chụp mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu14g45_01727__1w_warmwhite__ch_p_m___large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_fcb222b581eb4fe296b52d3abdf4df83_large.jpg" alt=" Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01727 (1W warmwhite, chụp mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191637)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-dien-quang-dq-ledbu14g45-01727-1w-warmwhite-chup-mo.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-dien-quang-dq-ledbu14g45-01727-1w-warmwhite-chup-mo" title="Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01727 (1W warmwhite, chụp mờ)">Đèn LED Bulb Điện Quang ĐQ LEDBU14G45 01727 (1W warmwhite, chụp mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">24,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063488">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-than-nhua-a50-dien-quang-dq-ledbu-a50-03765-3w-daylight-chup-cau-mo.html" title="Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03765 (3W daylight chụp cầu mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03765 (3W daylight chụp cầu mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu_a50_03765__3w_daylight_ch_p_c_u_m___large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_f2f1d8eff5194c1da13ba831ef872604_large.jpg" alt=" Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03765 (3W daylight chụp cầu mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191656)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-than-nhua-a50-dien-quang-dq-ledbu-a50-03765-3w-daylight-chup-cau-mo.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-than-nhua-a50-dien-quang-dq-ledbu-a50-03765-3w-daylight-chup-cau-mo.html" title="Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03765 (3W daylight chụp cầu mờ)">Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03765 (3W daylight chụp cầu mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">32,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063507">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-than-nhua-a50-dien-quang-dq-ledbu-a50-03727-3w-warmwhite-chup-cau-mo.html" title="Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03727 (3W warmwhite chụp cầu mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03727 (3W warmwhite chụp cầu mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu_a50_03727__3w_warmwhite_ch_p_c_u_m___large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_ae3d68cc4bb64e0fb0122a337f152482_large.jpg" alt=" Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03727 (3W warmwhite chụp cầu mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191655)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-than-nhua-a50-dien-quang-dq-ledbu-a50-03727-3w-warmwhite-chup-cau-mo.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-than-nhua-a50-dien-quang-dq-ledbu-a50-03727-3w-warmwhite-chup-cau-mo" title="Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03727 (3W warmwhite chụp cầu mờ)">Đèn LED bulb thân nhựa A50 Điện Quang ĐQ LEDBU A50 03727 (3W warmwhite chụp cầu mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">32,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063506">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-03727-3w-warmwhite-chup-cau-mo-nguon-tich-hop" title="Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 03727 (3W, warmwhite, chụp cầu mờ, nguồn tích hợp)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A55V 03727 (3W, warmwhite, chụp cầu mờ, nguồn tích hợp) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a55v_03727__3w__warmwhite__ch_p_c_u_m___ngu_n_t_ch_h_p__large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/led_bulb_bu11a60v_7w-v01-170920-tk-linhch-01_92a3419d27214826aa053bd559e98633_large.png" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A55V 03727 (3W, warmwhite, chụp cầu mờ, nguồn tích hợp) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023420332)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-03727-3w-warmwhite-chup-cau-mo-nguon-tich-hop">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-03727-3w-warmwhite-chup-cau-mo-nguon-tich-hop.html" title="Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 03727 (3W, warmwhite, chụp cầu mờ, nguồn tích hợp)">Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 03727 (3W, warmwhite, chụp cầu mờ, nguồn tích hợp) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">35,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012173630">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-03765-3w-daylight-chup-cau" title="Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 03765 (3W, daylight, chụp cầu mờ, nguồn tích hợp)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A55V 03765 (3W, daylight, chụp cầu mờ, nguồn tích hợp) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a55v_03765__3w__daylight__ch_p_c_u_m___ngu_n_t_ch_h_p__ccbced8adf3f45309257e053b47f3d1e_large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_df2ddd34ebf549ce968c63ce4873c9e2_large.jpg" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A55V 03765 (3W, daylight, chụp cầu mờ, nguồn tích hợp) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191614)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-03765-3w-daylight-chup-cau">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-03765-3w-daylight-chup-cau.html" title="Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 03765 (3W, daylight, chụp cầu mờ, nguồn tích hợp)">Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 03765 (3W, daylight, chụp cầu mờ, nguồn tích hợp) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">35,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063465">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a50-03727-3w-warmwhite-chup-cau-mo.html" title="Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A50 03727 (3W warmwhite, chụp cầu mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A50 03727 (3W warmwhite, chụp cầu mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a50_03727__3w_warmwhite__ch_p_c_u_m___large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_c5bc0673dbd3442e952f3b724c0c6dab_large.jpg" alt=" Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A50 03727 (3W warmwhite, chụp cầu mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191613)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a50-03727-3w-warmwhite-chup-cau-mo.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a50-03727-3w-warmwhite-chup-cau-mo" title="Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A50 03727 (3W warmwhite, chụp cầu mờ)">Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A50 03727 (3W warmwhite, chụp cầu mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">35,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063464">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-than-nhua-a55-dien-quang-dq-ledbu-a55-05765-5w-daylight-chup-cau-mo" title="Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05765 (5W daylight chụp cầu mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05765 (5W daylight chụp cầu mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu_a55_05765__5w_daylight_ch_p_c_u_m___large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_562bffec105d4a80a76bb6e15f0eeabe_large.jpg" alt=" Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05765 (5W daylight chụp cầu mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191658)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-than-nhua-a55-dien-quang-dq-ledbu-a55-05765-5w-daylight-chup-cau-mo">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-than-nhua-a55-dien-quang-dq-ledbu-a55-05765-5w-daylight-chup-cau-mo.html" title="Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05765 (5W daylight chụp cầu mờ)">Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05765 (5W daylight chụp cầu mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">41,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063509">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-than-nhua-a55-dien-quang-dq-ledbu-a55-05727-5w-warmwhite-chup-cau-mo.html" title="Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05727 (5W warmwhite chụp cầu mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05727 (5W warmwhite chụp cầu mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu_a55_05727__5w_warmwhite_ch_p_c_u_m___large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_f857453c92294ed89947bb229d213a47_large.jpg" alt=" Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05727 (5W warmwhite chụp cầu mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191657)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-than-nhua-a55-dien-quang-dq-ledbu-a55-05727-5w-warmwhite-chup-cau-mo.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-than-nhua-a55-dien-quang-dq-ledbu-a55-05727-5w-warmwhite-chup-cau-mo" title="Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05727 (5W warmwhite chụp cầu mờ)">Đèn LED bulb thân nhựa A55 Điện Quang ĐQ LEDBU A55 05727 (5W warmwhite chụp cầu mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">41,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063508">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-05765-5w-daylight-chup-cau" title="Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 05765 (5W, daylight, chụp cầu mờ, nguồn tích hợp)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A55V 05765 (5W, daylight, chụp cầu mờ, nguồn tích hợp) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a55v_05765__5w__daylight__ch_p_c_u_m___ngu_n_t_ch_h_p__6db937dab9a34481b8db1b0d04f3bc6d_large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/dq_ledbu11a55v_05765__5w__daylight__ch_p_c_u_m___ngu_n_t_ch_h_p__large.jpg" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A55V 05765 (5W, daylight, chụp cầu mờ, nguồn tích hợp) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191616)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-05765-5w-daylight-chup-cau">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-05765-5w-daylight-chup-cau.html" title="Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 05765 (5W, daylight, chụp cầu mờ, nguồn tích hợp)">Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 05765 (5W, daylight, chụp cầu mờ, nguồn tích hợp) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">41,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063467">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-05727-5w-warmwhite-chup-cau-mo-nguon-tich-hop.html" title="Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 05727 (5W, warmwhite, chụp cầu mờ, nguồn tích hợp)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A55V 05727 (5W, warmwhite, chụp cầu mờ, nguồn tích hợp) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a55v_05727__5w__warmwhite__ch_p_c_u_m___ngu_n_t_ch_h_p__large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/led_bulb_bu11a60v_7w-v01-170920-tk-linhch-01_large.png" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A55V 05727 (5W, warmwhite, chụp cầu mờ, nguồn tích hợp) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191615)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-05727-5w-warmwhite-chup-cau-mo-nguon-tich-hop.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a55v-05727-5w-warmwhite-chup-cau-mo-nguon-tich-hop.html" title="Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 05727 (5W, warmwhite, chụp cầu mờ, nguồn tích hợp)">Đèn LED bulb BU11  Điện Quang ĐQ LEDBU11A55V 05727 (5W, warmwhite, chụp cầu mờ, nguồn tích hợp) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">41,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063466">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-05765-5w-daylight-chup-cau-mo" title="Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A60 05765 (5W daylight, chụp cầu mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A60 05765 (5W daylight, chụp cầu mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a60_05765__5w_daylight__ch_p_c_u_m___large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_77208b478ec148e7a18afc4430203c7b_large.jpg" alt=" Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A60 05765 (5W daylight, chụp cầu mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191617)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-05765-5w-daylight-chup-cau-mo">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-05765-5w-daylight-chup-cau-mo.html" title="Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A60 05765 (5W daylight, chụp cầu mờ)">Đèn LED Bulb BU11 Điện Quang ĐQ LEDBU11A60 05765 (5W daylight, chụp cầu mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">44,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063468">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-07727-v02-7w-warmwhite-chup-cau-mo.html" title="Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07727 V02 (7W, warmwhite, chụp cầu mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07727 V02 (7W, warmwhite, chụp cầu mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a60v_07727__7w__warmwhite__ch_p_c_u_m___ngu_n_t_ch_h_p__large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/led_bulb_bu11_v02_61102c9e2b40410c8f087c6b25bfce93_large.png" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07727 V02 (7W, warmwhite, chụp cầu mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1025051806)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-07727-v02-7w-warmwhite-chup-cau-mo.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-07727-v02-7w-warmwhite-chup-cau-mo" title="Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07727 V02 (7W, warmwhite, chụp cầu mờ)">Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07727 V02 (7W, warmwhite, chụp cầu mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">47,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012897276">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-07765-v02-7w-daylight-chup-cau-mo.html" title="Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07765 V02 (7W, daylight, chụp cầu mờ)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07765 V02 (7W, daylight, chụp cầu mờ) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a60v_07765__7w__daylight__ch_p_c_u_m___ngu_n_t_ch_h_p__large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/led_bulb_bu11_v02_f93bff64422e43f0a825fec54a5f29b1_large.png" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07765 V02 (7W, daylight, chụp cầu mờ) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1025051769)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-07765-v02-7w-daylight-chup-cau-mo.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60-07765-v02-7w-daylight-chup-cau-mo" title="Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07765 V02 (7W, daylight, chụp cầu mờ)">Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60 07765 V02 (7W, daylight, chụp cầu mờ) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">47,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012897252">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60v-07727-7w-warmwhite-chup-cau-mo-nguon-tich-hop.html" title="Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07727 (7W, warmwhite, chụp cầu mờ, nguồn tích hợp)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07727 (7W, warmwhite, chụp cầu mờ, nguồn tích hợp) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a60v_07727__7w__warmwhite__ch_p_c_u_m___ngu_n_t_ch_h_p__af249c854f8a4657a33e0d02e6d3de4d_large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/led_bulb_bu11a60v_7w-v01-170920-tk-linhch-01_a3e0a64ff7034ed184f0bd3effe2b4da_large.png" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07727 (7W, warmwhite, chụp cầu mờ, nguồn tích hợp) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023420331)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60v-07727-7w-warmwhite-chup-cau-mo-nguon-tich-hop.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60v-07727-7w-warmwhite-chup-cau-mo-nguon-tich-hop.html" title="Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07727 (7W, warmwhite, chụp cầu mờ, nguồn tích hợp)">Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07727 (7W, warmwhite, chụp cầu mờ, nguồn tích hợp) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">47,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012173629">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60v-07765-7w-daylight-chup-cau-1.html" title="Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07765 (7W, daylight, chụp cầu mờ, nguồn tích hợp)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07765 (7W, daylight, chụp cầu mờ, nguồn tích hợp) " src="../../product.hstatic.net/1000253446/product/dq_ledbu11a60v_07765__7w__daylight__ch_p_c_u_m___ngu_n_t_ch_h_p__97f6f67d551d48e49186e2e4e2890d10_large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_d11a56d1ecb84787a8637b0e9fa56c00_large.jpg" alt=" Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07765 (7W, daylight, chụp cầu mờ, nguồn tích hợp) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191619)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60v-07765-7w-daylight-chup-cau-1.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-right -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-bu11-dien-quang-dq-ledbu11a60v-07765-7w-daylight-chup-cau-1" title="Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07765 (7W, daylight, chụp cầu mờ, nguồn tích hợp)">Đèn LED bulb BU11 Điện Quang ĐQ LEDBU11A60V 07765 (7W, daylight, chụp cầu mờ, nguồn tích hợp) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">47,000₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063470">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="product-block">
+
+                                <div class="product-img image-resize view view-third">
+
+
+
+                                    <a href="../products/den-led-bulb-fl-dien-quang-dq-ledbufl03-a60-04727-4w-warmwhite-vo-thuy.html" title="Đèn LED bulb FL Điện Quang ĐQ LEDBUFL03 A60 04727 (4w, warmwhite, vỏ thủy tinh)">
+                                        <img class="first-image  has-img" alt=" Đèn LED bulb FL Điện Quang ĐQ LEDBUFL03 A60 04727 (4w, warmwhite, vỏ thủy tinh) " src="../../product.hstatic.net/1000253446/product/dq_ledbufl03_a60_04727__4w__warmwhite__v__th_y_tinh__large.jpg">
+
+                                        <img class="second-image" src="../../product.hstatic.net/1000253446/product/upload_b60e06dbb39a47db947cdae265cb2e8e_large.jpg" alt=" Đèn LED bulb FL Điện Quang ĐQ LEDBUFL03 A60 04727 (4w, warmwhite, vỏ thủy tinh) ">
+
+                                    </a>
+                                    <div class="actionss">
+
+                                        <div class="btn-cart-products">
+                                            <a href="javascript:void(0);" onclick="add_item_show_modalCart(1023191646)">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-quickview-products">
+
+                                            <a href="../products/den-led-bulb-fl-dien-quang-dq-ledbufl03-a60-04727-4w-warmwhite-vo-thuy.html">
+                                                Xem nhanh
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="product-detail clearfix" style="text-align:left">
+
+
+                                    <!-- sử dụng pull-left -->
+                                    <h3 class="pro-name"><a href="led-bulb-csn/products/den-led-bulb-fl-dien-quang-dq-ledbufl03-a60-04727-4w-warmwhite-vo-thuy.html" title="Đèn LED bulb FL Điện Quang ĐQ LEDBUFL03 A60 04727 (4w, warmwhite, vỏ thủy tinh)">Đèn LED bulb FL Điện Quang ĐQ LEDBUFL03 A60 04727 (4w, warmwhite, vỏ thủy tinh) </a></h3>
+
+                                    <div class="pro-prices">
+                                        <strong><p class="pro-price">50,001₫</p><br></strong>
+
+                                    </div>
+
+
+
+                                    <div class="haravan-product-reviews-badge" data-id="1012063497">  </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <div class="clearfix">
+                        <div id="pagination" class="">
+
+
+                            <div class="col-lg-2 col-md-2 col-sm-3 hidden-xs">
+
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center">
+
+
+
+                                <span class="page-node current">1</span>
+
+
+
+                                <a class="page-node" href="led-bulb-csn4658.html?page=2">2</a>
+
+
+
+                                <a class="page-node" href="led-bulb-csn9ba9?page=3">3</a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-3 hidden-xs">
+                                <a class="pull-right next fa fa-angle-right" href="led-bulb-csn4658.html?page=2"><span>Trang sau</span></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End collection info -->
+    <!-- Begin no products -->
+    <!-- End no products -->
+</div>*@
