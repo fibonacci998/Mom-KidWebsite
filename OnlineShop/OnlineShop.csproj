@@ -1023,8 +1023,13 @@
     <Content Include="Assets\Client\chart\public_html\index2.html" />
     <Content Include="Assets\Client\js\controller\cartController.js" />
     <Content Include="Assets\Client\js\controller\emailController.js" />
+    <Content Include="Assets\Client\slide\dung.jpg" />
+    <Content Include="Assets\Client\slide\hoang.jpg" />
+    <Content Include="Assets\Client\slide\nhat.jpg" />
     <Content Include="Assets\Client\slide\slide1.jpg" />
     <Content Include="Assets\Client\slide\slide2.jpg" />
+    <Content Include="Assets\Client\slide\toan.jpg" />
+    <Content Include="Assets\Client\slide\tuan.jpg" />
     <Content Include="Assets\Client\theme slide js\banner-top30f4.jpg" />
     <Content Include="Assets\Client\theme slide js\bocongthuong30f4.png" />
     <Content Include="Assets\Client\theme slide js\catalogue30f4.jpg" />
