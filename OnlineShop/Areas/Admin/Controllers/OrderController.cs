@@ -25,5 +25,11 @@ namespace OnlineShop.Areas.Admin.Controllers
                 status = result
             });
         }
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            new OrderDAO().Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }

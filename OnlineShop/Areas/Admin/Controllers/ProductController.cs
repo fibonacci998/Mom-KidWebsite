@@ -42,6 +42,7 @@ namespace OnlineShop.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var product = new ProductDAO().ViewDetail(id);
+            PopulateCategoryDropDownList();
             return View(product);
         }
         [HttpPost]
@@ -57,10 +58,16 @@ namespace OnlineShop.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Thêm user thất bại");
+                    ModelState.AddModelError("", "Sửa sản phẩm thất bại");
                 }
             }
             return View("Index");
+        }
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            new ProductDAO().Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

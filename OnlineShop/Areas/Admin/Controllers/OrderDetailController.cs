@@ -1,5 +1,6 @@
 ﻿using Model.Dao;
 using Model.EF;
+using Model.ViewModel;
 using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace OnlineShop.Areas.Admin.Controllers
         // GET: Admin/OrderDetail
         public ActionResult Index(int id)
         {
-            List<OrderDetail> order = new List<OrderDetail>();
+            List<OrderDetailJoinProduct> order = new List<OrderDetailJoinProduct>();
             order = new OrderDetailDAO().getOrderDetail(id);
             return View(order);
         }

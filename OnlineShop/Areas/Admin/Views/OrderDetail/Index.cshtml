@@ -1,4 +1,4 @@
-﻿@model List<Model.EF.OrderDetail>
+﻿@model List<Model.ViewModel.OrderDetailJoinProduct>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -18,9 +18,9 @@
                         <thead>
                             <tr>
                                 <th>Tên sản phẩm</th>
+                                <th>Ảnh</th>
                                 <th>Số lượng</th>
                                 <th>Giá tiền</th>
-                                <th>Ảnh</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,11 +28,12 @@
                             {
                                 <tr>
                                     <td>
-                                        @item.product.Name
+                                        @item.NameProduct
                                     </td>
+                                    <td><img width="40px" src="@item.ImageProduct" /></td>
                                     <td>@item.Quantity</td>
                                     <td>@item.Price</td>
-                                    <td><img width="40px" src="@item.product.Image" /></td>
+                                    
                                 </tr>
                             }
                         </tbody>

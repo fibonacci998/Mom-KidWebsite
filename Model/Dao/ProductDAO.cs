@@ -55,7 +55,19 @@ namespace Model.Dao
             try
             {
                 var product = db.Products.Find(entity.ID);
+                if (!string.IsNullOrEmpty(entity.Name)) product.Name = entity.Name;
+                if (!string.IsNullOrEmpty(entity.Description)) product.Description = entity.Description;
+                if (!string.IsNullOrEmpty(entity.Image)) product.Image = entity.Image;
+                //if (string.IsNullOrEmpty(entity.CategoryID)) 
+                product.CategoryID = entity.CategoryID;
+                if (!string.IsNullOrEmpty(entity.Detail)) product.Detail = entity.Detail;
+                //if (string.IsNullOrEmpty(entity.TopHot)) 
+                product.TopHot = entity.TopHot;
+                //if (string.IsNullOrEmpty(entity.Status)) 
+                product.Status = entity.Status;
+                //if (string.IsNullOrEmpty(entity.Quantity))
                 product.Quantity = entity.Quantity;
+                //if (string.IsNullOrEmpty(entity.Price))
                 product.Price = entity.Price;
                 product.ModifiedDate = DateTime.Now;
                 db.SaveChanges();
@@ -65,6 +77,21 @@ namespace Model.Dao
             {
                 return false;
             }
+        }
+        public bool Delete(int id)
+        {
+            try
+            {
+                var product = db.Products.Find(id);
+                db.Products.Remove(product);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
         }
     }
 }

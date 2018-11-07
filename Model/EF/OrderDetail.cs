@@ -24,6 +24,6 @@ namespace Model.EF
 
         public decimal? Price { get; set; }
 
-        public Product product { get { return new ProductDAO().ViewDetail(ProductID); } set { } }
+        //public Product product { get { return new ProductDAO().ViewDetail(ProductID); } set { } }
     }
 }

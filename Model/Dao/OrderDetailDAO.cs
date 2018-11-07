@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using Model.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,10 +36,25 @@ namespace Model.Dao
             db.SaveChanges();
             return order.Status;
         }
-        public List<OrderDetail> getOrderDetail(long id)
+        public List<OrderDetailJoinProduct> getOrderDetail(long id)
         {
-            List<OrderDetail> orderDetail = (List < OrderDetail > )db.OrderDetails.Where(x => x.OrderID == id).ToList();
-            return orderDetail;
+            var orderDetail =
+                from a in db.OrderDetails
+                join b in db.Products
+                on a.ProductID equals b.ID
+                where a.OrderID == id
+                select new OrderDetailJoinProduct()
+                {
+                    OrderID = a.OrderID,
+                    Quantity = a.Quantity,
+                    Price=a.Price,
+                    ProductID=a.ProductID,
+                    NameProduct=b.Name,
+                    CodeProduct=b.Code,
+                    ImageProduct=b.Image
+                };
+                
+            return orderDetail.ToList();
         }
     }
 }

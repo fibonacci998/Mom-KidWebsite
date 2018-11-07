@@ -117,6 +117,7 @@ namespace OnlineShop.Controllers
             order.ShipMobile = mobile;
             order.ShipName = shipName;
             order.ShipEmail = email;
+            order.Status = false;
             try
             {
                 var id = new OrderDAO().insert(order);
@@ -138,6 +139,10 @@ namespace OnlineShop.Controllers
             return Redirect("/hoan-thanh");
         }
         public ActionResult Success()
+        {
+            return View();
+        }
+        public ActionResult Error()
         {
             return View();
         }

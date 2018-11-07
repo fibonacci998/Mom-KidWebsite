@@ -33,5 +33,20 @@ namespace Model.Dao
             db.SaveChanges();
             return order.Status;
         }
+        public bool Delete(int id)
+        {
+            try
+            {
+                var order = db.Orders.Find(id);
+                db.Orders.Remove(order);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
     }
 }

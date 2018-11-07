@@ -61,7 +61,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
 
-                                    <button id="add-to-cart" class=" btn-detail btn-color-add btn-min-width btn-mgt addtocart-modal" name="add">
+                                    <button id="add-to-cart" class="btn-detail btn-color-add btn-min-width btn-mgt addtocart-modal" name="add">
                                         Mua ngay
                                         <br>
                                         <span style="font-size: 12px; font-weight: 300;">Giao tận nơi hoặc đến Showroom mua hàng</span>
@@ -80,7 +80,11 @@
                                         {
                                             @Html.Raw("● " + ii+ "</br>");
                                         }
-
+                                        temp = Model.Detail;
+                                        foreach (var ii in temp.Split('.'))
+                                        {
+                                            @Html.Raw("● " + ii + "</br>");
+                                        }
                                     }
                                 </div>
                             </div>
@@ -134,14 +138,14 @@
                                             <div class="actionss">
 
                                                 <div class="btn-cart-products">
-                                                    <a href="#">
+                                                    <a href="/them-gio-hang?productId=@item.ID&quantity=1">
                                                         Mua ngay
                                                     </a>
                                                 </div>
 
                                                 <div class="btn-quickview-products">
 
-                                                    <a href="#">
+                                                    <a href="/chi-tiet/@item.MetaTitle-@item.ID">
                                                         Xem nhanh
                                                     </a>
                                                 </div>
@@ -153,7 +157,7 @@
                                             <h3 class="pro-name"><a href="/chi-tiet/@item.MetaTitle-@item.ID">@item.Name</a></h3>
 
                                             <div class="pro-prices">
-                                                <strong><p class="pro-price">@item.Price ₫</p><br /></strong>
+                                                <strong><p class="pro-price">@item.Price.GetValueOrDefault().ToString("N0") ₫</p><br /></strong>
                                             </div>
                                         </div>
                                     </div>
