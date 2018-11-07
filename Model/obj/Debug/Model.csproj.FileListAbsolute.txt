@@ -23,6 +23,5 @@ D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\EntityFramework.xml
 D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\EntityFramework.SqlServer.xml
 D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\PagedList.xml
 D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Debug\PagedList.Mvc.xml
-D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Debug\Model.dll
 D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Debug\Model.pdb

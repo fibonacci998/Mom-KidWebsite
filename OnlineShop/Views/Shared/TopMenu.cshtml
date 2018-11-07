@@ -1,5 +1,16 @@
 ﻿@model List<Model.EF.Menu>
-@foreach (var item in Model)
-{
-    <a href="@item.Link" target="@item.Target">@item.Text</a>
+@{
+    var session = (OnlineShop.Common.UserLogin)Session[OnlineShop.Common.CommonConstants.USER_SESSION];
 }
+@if (Session[OnlineShop.Common.CommonConstants.USER_SESSION] == null)
+{
+    foreach (var item in Model)
+    {
+        <a href="@item.Link" target="@item.Target">@item.Text</a>
+    }
+}else
+{
+    <a>Xin chào: @session.Username    </a>
+    <a>@Html.ActionLink("Thoát","Logout","User")</a>
+}
+

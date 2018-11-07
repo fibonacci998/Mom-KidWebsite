@@ -17,7 +17,14 @@ namespace Model.Dao
         public long Insert(User entity)
         {
             db.Users.Add(entity);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            } catch (Exception e)
+            {
+                string ee = e.Message;
+            }
+            
             return entity.ID;
         }
         public bool Update(User entity)
@@ -93,6 +100,33 @@ namespace Model.Dao
                 }
             }
         }
+        public int LoginNormal(string username, string password)
+        {
+            var result = db.Users.SingleOrDefault(x => x.Username == username && x.Type == null);
+
+            if (result == null)
+            {
+                return 0;
+            }
+            else
+            {
+                if (result.Status == false)
+                {
+                    return -1;
+                }
+                else
+                {
+                    if (result.Password == password)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return -2;
+                    }
+                }
+            }
+        }
         public User GetByID(string username)
         {
             return db.Users.SingleOrDefault(x => x.Username==username);
@@ -103,6 +137,14 @@ namespace Model.Dao
             user.Status = !user.Status;
 
             return !user.Status;
+        }
+        public bool CheckUsername(string username)
+        {
+            return db.Users.Count(x => x.Username == username) > 0;
+        }
+        public bool CheckEmail(string email)
+        {
+            return db.Users.Count(x => x.Email == email) > 0;
         }
     }
 }

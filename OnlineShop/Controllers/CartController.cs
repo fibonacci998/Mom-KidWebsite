@@ -124,6 +124,9 @@ namespace OnlineShop.Controllers
             order.ShipName = shipName;
             order.ShipEmail = email;
             order.Status = false;
+
+            var session = (OnlineShop.Common.UserLogin)Session[OnlineShop.Common.CommonConstants.USER_SESSION];
+            order.CustomerID = session.UserID;
             try
             {
                 int totalPrice = 0;

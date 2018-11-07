@@ -16,6 +16,11 @@ namespace OnlineShop.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult Logout()
+        {
+            Session[CommonConstants.USER_SESSION] = null;
+            return Redirect("/");
+        }
         public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)
