@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var totalPrice = ViewBag.totalPrice;
 }
 @section jsFooter{
     <script src="~/Assets/Client/js/controller/cartController.js"></script>
@@ -81,7 +82,7 @@
                                         <td colspan="4" class="text-center" style="text-align:right"><b>Tổng cộng</b></td>
                                         <td colspan="2" class="price">
                                             <span class="total" style="color:red">
-                                                <strong>444,000₫</strong>
+                                                <strong>@totalPrice ₫</strong>
                                             </span>
                                         </td>
                                     </tr>

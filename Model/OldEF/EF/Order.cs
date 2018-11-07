@@ -15,11 +15,13 @@ namespace Model.EF
 
         public long? CustomerID { get; set; }
 
+        [StringLength(1000)]
         public string ShipName { get; set; }
 
         [StringLength(50)]
         public string ShipMobile { get; set; }
 
+        [StringLength(1000)]
         public string ShipAddress { get; set; }
 
         [StringLength(50)]

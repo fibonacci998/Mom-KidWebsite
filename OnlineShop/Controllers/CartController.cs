@@ -20,6 +20,12 @@ namespace OnlineShop.Controllers
             if (cart != null)
             {
                 list = (List<CartItem>)cart;
+                var totalPrice = 0;
+                foreach (var item in list)
+                {
+                    totalPrice += (int)item.Product.Price * item.Quantity;
+                }
+                ViewBag.totalPrice = totalPrice.ToString("N0");
             }
             return View(list);
         }
@@ -120,6 +126,7 @@ namespace OnlineShop.Controllers
             order.Status = false;
             try
             {
+                int totalPrice = 0;
                 var id = new OrderDAO().insert(order);
                 var cart = (List<CartItem>)Session[CartSession];
                 var detailDAO = new OrderDetailDAO();
@@ -131,6 +138,7 @@ namespace OnlineShop.Controllers
                     orderDetail.Price = item.Product.Price;
                     orderDetail.Quantity = item.Quantity;
                     detailDAO.Insert(orderDetail);
+                    totalPrice += (int)item.Product.Price.GetValueOrDefault(0) * item.Quantity;
                 }
             }catch(Exception e)
             {
