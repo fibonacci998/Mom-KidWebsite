@@ -22,8 +22,11 @@ namespace Model.Dao
         {
             Dictionary<string, int> map = new Dictionary<string, int>();
             SqlConnection conn = new SqlConnection(connStr);
-            SqlCommand cmd = new SqlCommand(@"SELECT CAST(CreatedDate AS DATE) AS Date,SUM(Price) AS Price FROM dbo.[Order] JOIN dbo.OrderDetail 
-            ON OrderID=ID GROUP BY CAST(CreatedDate AS DATE)", conn);
+            SqlCommand cmd = new SqlCommand(@"SELECT CAST(CreatedDate AS DATE) AS Date,SUM(Price) AS Price 
+            FROM dbo.[Order] JOIN dbo.OrderDetail 
+            ON OrderID=ID 
+            where dbo.[Order].status=1
+            GROUP BY CAST(CreatedDate AS DATE)", conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
