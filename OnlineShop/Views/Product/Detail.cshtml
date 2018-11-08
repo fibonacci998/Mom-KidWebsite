@@ -100,13 +100,16 @@
                             <div class="addthis_toolbox social-sharing addthis_default_style ">
                                 <div class="social-media" data-permalink="am-dun-nuoc-sieu-toc-dien-quang-dq-ekt03-1815-1800-1-5l-than-nhua.html">
                                     <label>Chia sẻ: </label>
-                                    <a target="_blank" href="http://www.facebook.com/sharer.php?u=https://shop.dienquang.com/products/am-dun-nuoc-sieu-toc-dien-quang-dq-ekt03-1815-1800-1-5l-than-nhua" class="btn-transition btn-border-hover share-facebook" title="Chia sẻ lên Facebook">
+                                    @{ 
+                                        var link = Request.Url.ToString();
+                                    }
+                                    <a target="_blank" href="http://www.facebook.com/sharer.php?u=@link" class="btn-transition btn-border-hover share-facebook" title="Chia sẻ lên Facebook">
                                         <i class="fa fa-facebook-official"></i>
                                     </a>
-                                    <a target="_blank" href="http://twitter.com/share?text=%e1%ba%a4m%20%c4%91un%20n%c6%b0%e1%bb%9bc%20si%c3%aau%20t%e1%bb%91c%20%c4%90i%e1%bb%87n%20Quang%20%c4%90Q%20EKT03%201815%20(1800,1.5L,th%c3%a2n%20nh%e1%bb%b1a)&amp;url=https://shop.dienquang.com/products/am-dun-nuoc-sieu-toc-dien-quang-dq-ekt03-1815-1800-1-5l-than-nhua" class="btn-transition btn-border-hover share-twitter" class="share-twitter" title="Chia sẻ lên Twitter">
+                                    <a target="_blank" href="http://twitter.com/share?@link" class="btn-transition btn-border-hover share-twitter" class="share-twitter" title="Chia sẻ lên Twitter">
                                         <i class="fa fa-twitter"></i>
                                     </a>
-                                    <a target="_blank" href="http://plus.google.com/share?url=https://shop.dienquang.com/products/am-dun-nuoc-sieu-toc-dien-quang-dq-ekt03-1815-1800-1-5l-than-nhua" class="btn-transition btn-border-hover share-google" title="+1">
+                                    <a target="_blank" href="http://plus.google.com/share?url=@link" class="btn-transition btn-border-hover share-google" title="+1">
                                         <i class="fa fa-google-plus"></i>
                                     </a>
                                 </div>

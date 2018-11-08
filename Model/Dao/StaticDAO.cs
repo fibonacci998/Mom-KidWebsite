@@ -12,7 +12,7 @@ namespace Model.Dao
     public class StaticDAO
     {
         OnlineShopDbContext db = null;
-        string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["OnlineShopDbContext"].ConnectionString;
+        string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["OnlineShopDBContextAzure"].ConnectionString;
         public StaticDAO()
         {
             db = new OnlineShopDbContext();
@@ -40,6 +40,26 @@ namespace Model.Dao
                 {
                     map.Add(dateTimeString, map[dateTimeString] + price);
                 }
+            }
+            return map;
+        }
+        public Dictionary<string, int> GetTopSellProduct()
+        {
+            Dictionary<string, int> map = new Dictionary<string, int>();
+            SqlConnection conn = new SqlConnection(connStr);
+            SqlCommand cmd = new SqlCommand(@"SELECT Number,Name+' ,ID:'+ cast(ProductID as varchar(100)) AS [Name] FROM 
+            (SELECT TOP 10 COUNT(*) AS Number,ProductID FROM 
+            dbo.OrderDetail JOIN dbo.Product ON dbo.OrderDetail.ProductID=dbo.Product.ID
+            GROUP BY ProductID) a JOIN dbo.Product ON a.ProductID=dbo.Product.ID", conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                string name = dr["Name"].ToString();
+                int number = Convert.ToInt32(dr["Number"]);
+                if (!map.ContainsKey(name))
+                    map.Add(name, number);
             }
             return map;
         }

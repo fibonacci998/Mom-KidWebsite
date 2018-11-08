@@ -14,7 +14,9 @@ namespace OnlineShop.Areas.Admin.Controllers
         {
             var staticDAO = new StaticDAO();
             Dictionary<string, int> revenue = staticDAO.GetListRevenue();
+            Dictionary<string, int> topProduct = staticDAO.GetTopSellProduct();
             ViewBag.revenue = revenue;
+            ViewBag.top = topProduct;
             return View();
         }
     }

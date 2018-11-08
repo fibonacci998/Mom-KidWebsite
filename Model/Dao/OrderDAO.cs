@@ -10,7 +10,6 @@ namespace Model.Dao
 {
     public class OrderDAO
     {
-        string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["OnlineShopDbContext"].ConnectionString;
         OnlineShopDbContext db = null;
         public OrderDAO()
         {

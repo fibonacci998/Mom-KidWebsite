@@ -87,10 +87,10 @@ cart.init();
     })
 });*/
 
-$('.txtQuantity').change(function () {
-    //$(this).text($($($(this).parent()).parent()).children('td')[2].val() + $($($(this).parent()).parent()).children('td')[3].val());
-    $(this).text($($(this).closest("tr")).children('td')[3].text());
-});
+//$('.txtQuantity').change(function () {
+//    $(this).text($($($(this).parent()).parent()).children('td')[2].val() + $($($(this).parent()).parent()).children('td')[3].val());
+//    $(this).text($($(this).closest("tr")).children('td')[3].text());
+//});
 /*
 function updatePrice(price) {
     //$('#total-price').text(parseInt($('#txt-quantity').val()) * parseInt(price));

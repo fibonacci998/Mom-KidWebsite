@@ -19,7 +19,7 @@ namespace OnlineShop.Areas.Admin.Controllers
         public ActionResult Logout()
         {
             Session[CommonConstants.USER_SESSION] = null;
-            return Redirect("/");
+            return Redirect("/Admin/Login");
         }
         public ActionResult Login(LoginModel model)
         {
