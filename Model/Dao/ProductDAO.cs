@@ -24,7 +24,12 @@ namespace Model.Dao
             var product = db.Products.Find(id);
             return db.Products.Where(x => x.ID!=id && x.CategoryID==product.CategoryID).Take(4).ToList();
         }
-
+        public List<Product> Search(string keyword, ref int totalRecord, int pageIndex = 1, int pageSize = 2)
+        {
+            totalRecord = db.Products.Where(x => x.Name.Contains(keyword)).Count();
+            var model = db.Products.Where(x => x.Name.Contains(keyword)).OrderByDescending(x => x.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            return model;
+        }
         public List<Product> listByCategoryId(long categoryId, ref int totalRecord, int pageIndex=1,int pageSize=2)
         {
             totalRecord = db.Products.Where(x => x.CategoryID == categoryId).Count();

@@ -15,7 +15,25 @@ namespace OnlineShop.Controllers
         {
             return View();
         }
+        public ActionResult Search(string keyword, int page = 1, int pageSize = 6)
+        {
+            int totalRecord = 0;
+            var model = new ProductDAO().Search(keyword, ref totalRecord, page, pageSize);
+            ViewBag.Total = totalRecord;
+            ViewBag.Page = page;
+            int maxPage = 5;
+            int totalPage = 0;
 
+            totalPage = (int)Math.Ceiling((double)((double)totalRecord / (double)pageSize));
+            ViewBag.TotalPage = totalPage;
+            ViewBag.MaxPage = maxPage;
+            ViewBag.First = 1;
+            ViewBag.Last = totalPage;
+            ViewBag.Next = page + 1;
+            ViewBag.Prev = page - 1;
+            ViewBag.keyword = keyword;
+            return View(model);
+        }
         public ActionResult Category(long id,int page= 1, int pageSize = 6)
         {
             var category = new ProductCategoryDAO().ViewDetail(id);

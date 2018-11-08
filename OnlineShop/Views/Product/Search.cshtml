@@ -1,0 +1,162 @@
+﻿@model List<Model.EF.Product>
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    jQuery(function () {
+        jQuery('#slider-container').slider({
+            range: true,
+            min: 0,
+            max: 10000000,
+            values: [1, 10000000],
+            create: function () {
+                jQuery("#amount").val("0 đ - 10,000,000 đ");
+            },
+            slide: function (event, ui) {
+                $("#amount").val(numberWithCommas(ui.values[0]) + " đ- " + numberWithCommas(ui.values[1]) + " đ");
+                var price_min = '';
+                var arr_price_min = numberWithCommas(ui.values[0]);
+                $.each(arr_price_min.split(','), function (i, v) {
+                    price_min = price_min + v;
+                });
+                $('#amount-min').val('(price:product>=' + parseInt(price_min) + ')');
+                var price_max = '';
+                var arr_price_max = numberWithCommas(ui.values[1]);
+                $.each(arr_price_max.split(','), function (i, v) {
+                    price_max = price_max + v;
+                });
+                $('#amount-max').val('(price:product<=' + parseInt(price_max) + ')');
+                var mi = ui.values[0];
+                var mx = ui.values[1];
+                filterSystem(mi, mx);
+            },
+            stop: function (event, ui) {
+                $.ajax({
+                    url: genQuery() + '&view=pagesize',
+                    success: function (data) {
+                        total_page = parseInt(data);
+                    }
+                });
+                //lay trang dau tien
+                $.ajax({
+                    url: genQuery() + '&view=data',
+                    success: function (data) {
+                        $('.pw-default').remove();
+                        $('.products-grid').html('');
+                        $('.empty').remove();
+                        $('.products-grid').append(data);
+                        $('.products-grid img').imagesLoaded(function () {
+                            $(window).resize();
+                        });
+                    }
+                });
+            }
+        })
+    });
+</script>
+<div class="row">
+    <div id="collection" class="content-pages collection-page" data-sticky_parent>
+
+        <div class="content-col col-md-12 col-sm-12 col-xs-12" data-sticky_column>
+            <div class="row">
+                <div class="main-content">
+                    <div class="col-md-12 hidden-sm hidden-xs">
+                        <div class="sort-collection">
+                            <div class="row">
+                                <h1 style="text-align:center;">
+                                    Tìm kiếm cho: @ViewBag.keyword
+                                </h1>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 content-product-list">
+                        <div class="product-list products-grid">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-4  col-sm-6 col-xs-12 pro-loop">
+
+                                    <div class="product-block">
+
+                                        <div class="product-img image-resize view view-third">
+
+                                            <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                <img class="first-image " src="@item.Image" />
+
+                                            </a>
+                                            <div class="actionss">
+
+                                                <div class="btn-cart-products">
+                                                    <a href="/them-gio-hang?productId=@item.ID&quantity=1">
+                                                        Mua ngay
+                                                    </a>
+                                                </div>
+
+                                                <div class="btn-quickview-products">
+
+                                                    <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                        Xem nhanh
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-detail clearfix" style="text-align:left">
+
+                                            <h3 class="pro-name">
+                                                <a href="">@item.Name </a>
+                                            </h3>
+
+                                            <div class="pro-prices">
+                                                <strong><p class="pro-price">@item.Price.GetValueOrDefault().ToString("N0") ₫</p><br /></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @if (ViewBag.TotalPage > 0)
+                    {
+
+                        int totalPage = (int)ViewBag.TotalPage;
+                        int currentPage = ((int)ViewBag.Page);
+
+
+                        var link= "/tim-kiem?keyword="+ViewBag.Keyword;
+                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                            <div class="clearfix">
+                                <div id="pagination" class="">
+                                    <div class="col-lg-2 col-md-2 col-sm-3 hidden-xs">
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 text-center">
+                                        @for (int i = 1; i <= totalPage; i++)
+                                        {
+                                            if (currentPage == i)
+                                            {
+                                                <span class="page-node current">@i</span>
+                                            }
+                                            else
+                                            {
+                                                <a class="page-node" href="@link&page=@i">@i</a>
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
