@@ -1043,6 +1043,8 @@
     <Content Include="Assets\Client\slide\dung.jpg" />
     <Content Include="Assets\Client\slide\hoang.jpg" />
     <Content Include="Assets\Client\slide\nhat.jpg" />
+    <Content Include="Assets\Client\slide\slider1.jpg" />
+    <Content Include="Assets\Client\slide\slider2.jpg" />
     <Content Include="Assets\Client\slide\toan.jpg" />
     <Content Include="Assets\Client\slide\tuan.jpg" />
     <Content Include="Assets\Client\theme slide js\banner-top30f4.jpg" />
@@ -1059,15 +1061,47 @@
     <Content Include="Assets\Client\theme slide js\slideshow_230f4.jpg" />
     <Content Include="Assets\Client\theme slide js\styles.css" />
     <Content Include="Assets\Client\theme slide js\styles30f4.css" />
-    <Content Include="Assets\Client\theme slide js\thong-tin-mua-hang30f4.png" />
+    <Content Include="Assets\Client\theme slide js\thong-tin-mua-hang.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Data\images\ad\40002147_1921903507896579_8922226367626477568_n.jpg" />
+    <Content Include="Data\images\ad\Cart01.jpg" />
+    <Content Include="Data\images\ad\Cart02.jpg" />
+    <Content Include="Data\images\ad\Cart03.jpg" />
+    <Content Include="Data\images\ad\Cart04.jpg" />
+    <Content Include="Data\images\ad\Cart05.jpg" />
+    <Content Include="Data\images\ad\Cart06.jpg" />
     <Content Include="Data\images\ad\dochoi1.jpg" />
     <Content Include="Data\images\ad\dochoi2.jpg" />
+    <Content Include="Data\images\ad\Frisolac.jpg" />
+    <Content Include="Data\images\ad\GLICO.jpg" />
+    <Content Include="Data\images\ad\GRAND NOBLE.jpg" />
+    <Content Include="Data\images\ad\Growplus.jpg" />
+    <Content Include="Data\images\ad\Jewelry01.jpg" />
+    <Content Include="Data\images\ad\Jewelry02.jpg" />
+    <Content Include="Data\images\ad\Jewelry03.jpg" />
+    <Content Include="Data\images\ad\Jewelry04.jpg" />
+    <Content Include="Data\images\ad\Jewelry05.jpg" />
+    <Content Include="Data\images\ad\Jewelry07.jpg" />
+    <Content Include="Data\images\ad\KidEss.jpg" />
+    <Content Include="Data\images\ad\NAN.jpg" />
+    <Content Include="Data\images\ad\Physiolac.jpg" />
     <Content Include="Data\images\ad\quanao1.jpg" />
     <Content Include="Data\images\ad\quanao2.jpg" />
     <Content Include="Data\images\ad\quanao3.jpg" />
     <Content Include="Data\images\ad\Screenshot %281%29.png" />
+    <Content Include="Data\images\ad\Set01.jpg" />
+    <Content Include="Data\images\ad\Set02.jpg" />
+    <Content Include="Data\images\ad\Set03.jpg" />
+    <Content Include="Data\images\ad\Set04.jpg" />
+    <Content Include="Data\images\ad\Set05.jpg" />
+    <Content Include="Data\images\ad\Set07.jpg" />
+    <Content Include="Data\images\ad\Toy01.jpg" />
+    <Content Include="Data\images\ad\Toy02.jpg" />
+    <Content Include="Data\images\ad\Toy03.jpg" />
+    <Content Include="Data\images\ad\Toy04.jpg" />
+    <Content Include="Data\images\ad\Toy05.jpg" />
+    <Content Include="Data\images\ad\Toy06.jpg" />
+    <Content Include="Data\images\ad\Toy07.jpg" />
     <Content Include="Data\_thumbs\Images\ad\40002147_1921903507896579_8922226367626477568_n.jpg" />
     <Content Include="Data\_thumbs\Images\ad\dochoi1.jpg" />
     <Content Include="Data\_thumbs\Images\ad\dochoi2.jpg" />
@@ -1167,6 +1201,7 @@
     <Content Include="Assets\Client\bootstrap\design\member\fonts-master\apache\roboto\roboto-thin.ttf" />
     <Content Include="Assets\Client\bootstrap\design\member\fonts-master\apache\roboto\roboto-thinitalic.ttf" />
     <Content Include="Areas\Admin\Views\OrderDetail\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\publish1MomAndKidWebsite.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1229,6 +1264,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

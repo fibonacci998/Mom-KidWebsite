@@ -1,0 +1,282 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var slides = (List<Model.EF.Slide>)ViewBag.Slides;
+    var listNewProducts = (List<Model.EF.Product>)ViewBag.NewProducts;
+    var listHotProducts = (List<Model.EF.Product>)ViewBag.HotProducts;
+}
+@section jsFooter{
+    <script src="~/Assets/Client/js/controller/emailController.js"></script>
+}
+@section slide{
+    <div class="slider-default bannerslider">
+    <div class="hrv-banner-container">
+        <div class="hrvslider">
+            <ul class="slides">
+                @foreach (var item in slides)
+                {
+                    <li>
+                        <a href="#" class="hrv-url">
+
+                            <img class="img-responsive" src="@item.Link" />
+                        </a>
+                        <div id="hrv-banner-caption1" class="hrv-caption hrv-banner-caption">
+                            <div class="container">
+                                <div class="hrv-caption-inner">
+                                    <div class="hrv-banner-content slider-1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+}
+<div class="pc">
+
+    <section id="content" class="clearfix container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <!-- Content-->
+                <div class="main-content">
+                    <!-- Sản phẩm trang chủ -->
+                    <!--Product loop-->
+
+                    <div class="product-list clearfix " id="san-pham-hot">
+                        <div class="container">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <aside class="styled_header  use_icon ">
+
+
+                                    <h3>SẢN PHẨM BÁN CHẠY</h3>
+
+                                </aside>
+
+
+                            </div>
+                        </div>
+                        <div class="container content-product-list css_button products-resize">
+
+                            @foreach (var item in listHotProducts)
+                            {
+                                <div class="col-md-12 col-sm-6 col-xs-6 pro-loop">
+
+                                    <div class="product-block">
+
+                                        @if (item.PromotionPrice != null)
+                                        {
+                                            <div class="product-sale">
+                                                <span><label class="sale-lb">- </label> @item.PromotionPrice</span>
+                                            </div>
+                                        }
+                                        <div class="product-img image-resize view view-third">
+
+                                            <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                <img class="first-image  has-img" src="@item.Image" />
+
+                                                <img class="second-image" src="@item.Image" />
+
+                                            </a>
+                                            <div class="actionss">
+
+                                                <div class="btn-cart-products">
+                                                    <a href="/them-gio-hang?productId=@item.ID&quantity=1">
+                                                        Mua ngay
+                                                    </a>
+                                                </div>
+
+                                                <div class="btn-quickview-products">
+
+                                                    <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                        Xem nhanh
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-detail clearfix" style="text-align:left">
+                                            <h3 class="pro-name">
+                                                <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                                    @item.Name
+                                                </a>
+                                            </h3>
+
+                                            <div class="pro-prices">
+                                                <strong><p class="pro-price">@(item.Price.GetValueOrDefault().ToString("N0")) ₫</p><br /></strong>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <!--<div class="row">
+                        <div class="col-lg-12 pull-center center ">
+
+
+
+                        </div>
+                        </div>-->
+                    </div>
+
+                    <div class="banner-bottom">
+                        <div class="row">
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end Content-->
+            </div>
+        </div>
+    </section>
+    <section id="content" class="clearfix container-fluid">
+        <div class="product-list clearfix container-fluid">
+            <div class="container">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <aside class="styled_header  use_icon ">
+
+
+                        <h3>SẢN PHẨM MỚI</h3>
+
+                    </aside>
+                </div>
+            </div>
+            <!--Product loop-->
+            <div class="container content-product-list css_button products-resize2">
+                @foreach (var item in listNewProducts)
+                {
+                    <div class="col-md-12 col-sm-6 col-xs-6 pro-loop">
+
+                        <div class="product-block">
+
+                            @if (item.PromotionPrice != null)
+                            {
+                                <div class="product-sale">
+                                    <span><label class="sale-lb">- </label> @item.PromotionPrice</span>
+                                </div>
+                            }
+                            <div class="product-img image-resize view view-third">
+
+                                <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                    <img class="first-image  has-img" src="@item.Image" />
+
+                                    <img class="second-image" src="@item.Image" />
+
+                                </a>
+                                <div class="actionss">
+
+                                    <div class="btn-cart-products">
+                                        <a href="/them-gio-hang?productId=@item.ID&quantity=1">
+                                            Mua ngay
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-quickview-products">
+
+                                        <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                            Xem nhanh
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-detail clearfix" style="text-align:left">
+                                <h3 class="pro-name">
+                                    <a href="/chi-tiet/@item.MetaTitle-@item.ID">
+                                        @item.Name
+                                    </a>
+                                </h3>
+
+                                <div class="pro-prices">
+                                    <strong><p class="pro-price">@item.Price.GetValueOrDefault().ToString("N0") ₫</p><br /></strong>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="news" id="lien-he" style="padding: 30px 0px;background:#F1F1F2;">
+    <div class="container">
+        <div class="col-xs-12 text-center" style="padding-bottom: 20px">
+            <h3 class="two">
+                <span>About us</span>
+            </h3>
+            <div class="row module-content" style="margin-top: 20px;">
+                <div class="col-sm-12 news-item no-padding">
+                    <div class="news_img">
+                        <a>
+                            <img class="img-responsive" src="~/Assets/Client/slide/tuan.jpg" alt="CHUNG CƯ BÀU CÁT 2">
+                        </a>
+                        <div class="button_hover">
+                            <p>
+                                Phan Anh Tuấn
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 news-item no-padding">
+                    <div class="news_img">
+                        <a>
+                            <img class="img-responsive" src="~/Assets/Client/slide/nhat.jpg" alt="SANCTUARY RESIDENTIAL RESORT">
+                        </a>
+                        <div class="button_hover">
+                            <p>
+                                Cao Linh Nhật
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 news-item no-padding">
+                    <div class="news_img">
+                        <a>
+                            <img class="img-responsive" src="~/Assets/Client/slide/hoang.jpg">
+                        </a>
+                        <div class="button_hover">
+                            <p>
+                                Phạm Việt Hoàng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 news-item no-padding">
+                    <div class="news_img">
+                        <a>
+                            <img class="img-responsive" src="~/Assets/Client/slide/dung.jpg">
+                        </a>
+                        <div class="button_hover">
+                            <p>
+                                Hoàng Lương Dũng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 news-item no-padding">
+                    <div class="news_img">
+                        <a>
+                            <img class="img-responsive" src="~/Assets/Client/slide/toan.jpg">
+                        </a>
+                        <div class="button_hover">
+                            <p>
+                                Đào Quang Toàn
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

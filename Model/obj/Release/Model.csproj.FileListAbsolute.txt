@@ -1,0 +1,14 @@
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\Model.dll.config
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\Model.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\Model.pdb
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\EntityFramework.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\EntityFramework.SqlServer.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\PagedList.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\PagedList.Mvc.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\EntityFramework.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\EntityFramework.SqlServer.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\PagedList.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\bin\Release\PagedList.Mvc.xml
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Release\Model.csprojResolveAssemblyReference.cache
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Release\Model.dll
+D:\Google drive\Datacode\C#\Mom-KidWebsite\Model\obj\Release\Model.pdb

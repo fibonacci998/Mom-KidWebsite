@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="content" class="clearfix container">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-create" id="layout-page">
+        <h2 style="background-color: #59585D; padding:10px; color: white; margin:0px;">
+            TÀI KHOẢN KHÁCH HÀNG
+        </h2>
+        <div class="col-md-6 col-lg-6">
+            <span class="header-contact header-page clearfix">
+                <h1 style="text-align:left">Đăng nhập tài khoản</h1>
+            </span>
+            <div id="customer-login">
+                <div id="login" class="login_box">
+                    <div class="accounttype">
+                        <h2 class="title"></h2>
+                    </div>
+                    @{Html.RenderPartial("login", (OnlineShop.Models.LoginModel)ViewBag.Login);}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <span class="header-contact header-page clearfix">
+                <h1 style="text-align:left">khách hàng mới</h1>
+            </span>
+            <div id="layout-page" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-create">
+                <div class="">
+                    @{Html.RenderPartial("Register", (OnlineShop.Models.RegisterModel)ViewBag.Login);}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

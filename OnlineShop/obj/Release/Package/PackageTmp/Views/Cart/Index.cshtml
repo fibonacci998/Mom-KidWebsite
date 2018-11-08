@@ -1,0 +1,137 @@
+﻿@model List<OnlineShop.Models.CartItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var totalPrice = ViewBag.totalPrice;
+}
+@section jsFooter{
+    <script src="~/Assets/Client/js/controller/cartController.js"></script>
+}
+<section id="content" class="clearfix container">
+    <div class="row">
+        <div id="cart" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 cart_pc">
+            <!-- Begin empty cart -->
+
+            <div class="row">
+                @if (Model.Count > 0)
+                {
+                    <div id="layout-page" class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="header-page clearfix">
+                            <h1>Giỏ hàng</h1>
+                            <hr>
+                        </span>
+
+                        <form id="cartformpage">
+                            <h2 style="background-color: gray; padding:10px; color: white; margin:0px;">
+                                CHI TIẾT GIỎ HÀNG
+                            </h2><table class="table table-bordered">
+                                <thead>
+
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th class="image">Ảnh sản phẩm</th>
+                                        <th class="item">Tên sản phẩm</th>
+                                        <th class="dongia">Đơn giá</th>
+                                        <th class="qty">Số lượng</th>
+                                        <th class="price">Giá tiền</th>
+                                        <th class="remove">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="image">
+                                                <div class="product_image">
+                                                    <a href="/chi-tiet/@item.Product.MetaTitle-@item.Product.ID">
+                                                        <img src="@item.Product.Image">
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="item">
+                                                <a href="/chi-tiet/@item.Product.MetaTitle-@item.Product.ID">
+                                                    <strong>@item.Product.Name</strong>
+
+                                                </a>
+                                            </td>
+                                            <td style="text-align:right; color:red;">
+                                                <strong>
+                                                    @item.Product.Price.GetValueOrDefault(0).ToString("N0") ₫
+                                                </strong>
+                                            </td>
+                                            <td class="qty">
+                                                <input type="text" class="tc item-quantity txtQuantity" data-id="@item.Product.ID" id="txt-quantity" value="@item.Quantity" />
+                                                <!--onchange=updatePrice()-->
+                                            </td>
+                                            <td class="price" style="color:red;">
+                                                <strong id="total-price">
+                                                    @((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0")) ₫
+                                                </strong>
+                                                
+                                            </td>
+                                            <td class="remove">
+                                                <a href="#" class="cart btn-delete" data-id="@item.Product.ID">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                    <tr>
+                                        <td colspan="4" class="text-center" style="text-align:right"><b>Tổng cộng</b></td>
+                                        <td colspan="2" class="price">
+                                            <span class="total" style="color:red">
+                                                <strong>@totalPrice ₫</strong>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 inner-left inner-right">
+                                                <div class="checkout-buttons clearfix" style="display:inline-flex; margin-top:60px;">
+                                                    <div class="">
+                                                        <a class="btn_add" id="btnContinue">Mua thêm</a>
+                                                    </div>
+                                                    <div class="">
+                                                        <a class="btn_add" id="btnUpdate">Cập nhật</a>
+                                                    </div>
+                                                    <div class="">
+                                                        <a id="delete_cart" class="btn_add " href="/cart/clear">Xóa giỏ hàng</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 cart-buttons inner-right inner-left">
+                                                <div class="buttons clearfix">
+                                                    <button id="btn_payment" class="button-default" style="background-color:red;color:white">Thanh toán</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </form>
+                    </div>
+                }
+                @if (Model.Count == 0)
+                {
+                    <div id="layout-page" class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="header-page clearfix">
+                            <h1>Giỏ hàng</h1>
+                        </span>
+                        <p class="text-center">
+                            Không có sản phẩm nào trong giỏ hàng!
+                        </p>
+                        <p class="text-center">
+                            <a href="/Home/Index">
+                                <i class="fa fa-reply"></i> Tiếp tục mua hàng
+                            </a>
+                        </p>
+                    </div>
+                }
+            </div>
+            <!-- End cart -->
+        </div>
+    </div>
+</section>

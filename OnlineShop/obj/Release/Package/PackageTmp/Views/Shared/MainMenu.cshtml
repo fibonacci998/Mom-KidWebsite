@@ -1,0 +1,66 @@
+﻿@model List<Model.EF.Menu>
+<nav>
+    <ul class="nav" style="margin-bottom: -1px;">
+        @foreach (var item in Model)
+        {
+            <li class="nav-item ">
+                <a href="@item.Link" target="item.Target" class="nav-link">
+                    @item.Text
+                </a>
+            </li>
+        }
+        <li class="nav-item has-mega">
+            <a href="collections/all.html" class="nav-link">
+                DANH SÁCH SẢN PHẨM
+
+                <i class="fa fa-angle-down" data-toggle="dropdown"></i>
+
+            </a>
+            <div class="mega-content" style="height: inherit;width:inherit;overflow-y: auto;">
+                <div class="level0-wrapper2">
+                    <div class="nav-block nav-block-center">
+                        <ul class="row" style="" id="megamenurow">
+
+                            <li class="col-sm-2" style="text-align: left;min-height: 190px;">
+
+                            </li>
+                            <li class="col-sm-2" style="text-align: left;min-height: 190px;">
+                                <a href="/san-pham/sua-1" title="Sữa" style="padding: 0px !important;">
+                                    <span style="font-weight: 600; font-size: 14px;">Sữa</span>
+                                </a>
+                            </li>
+
+
+                            <li class="col-sm-2" style="text-align: left;min-height: 190px;">
+                                <a href="/san-pham/quan-ao-2" title="Quần áo" style="padding: 0px !important;">
+                                    <span style="font-weight: 600; font-size: 14px;">Quần áo</span>
+                                </a>
+                            </li>
+
+                            <li class="col-sm-2" style="text-align: left;min-height: 190px;">
+                                <a href="/san-pham/do-choi-3" title="Đồ chơi" style="padding: 0px !important;">
+                                    <span style="font-weight: 600; font-size: 14px;">Đồ chơi</span>
+                                </a>
+
+                            </li>
+
+                            <li class="col-sm-2" style="text-align: left;min-height: 190px;">
+                                <a href="/san-pham/trang-suc-4" title="Trang sức" style="padding: 0px !important;">
+                                    <span style="font-weight: 600; font-size: 14px;">Trang sức</span>
+                                </a>
+
+                            </li>
+
+                            <li class="col-sm-2" style="text-align: left;min-height: 190px;">
+                                <a href="/san-pham/xe-day-5" title="Xe đẩy" style="padding: 0px !important;">
+                                    <span style="font-weight: 600; font-size: 14px;">Xe đẩy</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>

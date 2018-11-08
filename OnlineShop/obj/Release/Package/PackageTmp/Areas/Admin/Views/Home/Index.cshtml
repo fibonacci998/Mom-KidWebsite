@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var revenue = (Dictionary<string, int>)ViewBag.Revenue;
+}
+
+@section header{
+    Trang chủ    
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<div class="chartContainer">
+    <canvas id="myChart"></canvas>
+</div>
+<script>
+    var collection = @Html.Raw(Json.Encode(revenue));
+    var ctx = document.getElementById("myChart").getContext('2d');
+    
+    var xlabel=[],xvalue=[];
+    for (var property in collection){
+        if ( ! collection.hasOwnProperty(property)) {
+            continue;
+        }
+
+        xlabel.push(property);
+        xvalue.push(collection[property]);
+    }
+
+    var myChart = new Chart(ctx, {
+
+        type: 'line',
+        data: {
+            labels: xlabel,
+            datasets: [{
+                label: 'Number of Order',
+                data: xvalue,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(0,0,0,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+
+            title: {
+                display: true,
+                text: "Order statistic by months",
+                padding: 20,
+                position: 'bottom',
+                fontStyle: 'bold',
+                fontSize: 18
+
+            },
+            legend:{
+                position: 'right'
+
+            },
+            layout: {
+                padding: {
+                    left: 100,
+                    right: 0,
+                    top: 100,
+                    bottom: 0
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+
+                }]
+            },
+            elements: {
+                line: {
+                    tension: 0 // disables bezier curves
+                }
+            }
+      }
+
+
+
+});
+</script>
+
+<div class="chartContainer">
+    <canvas id="myChart2"></canvas>
+</div>
+<script>
+var ctx2 = document.getElementById("myChart2").getContext('2d');
+var myChart2 = new Chart(ctx2, {
+
+    type: 'bar',
+    data: {
+        labels: [" January"," February", "March", "April", "May", "June", "July"
+            , "August", "September", "October", "November", "December"],
+        datasets: [{
+            label: 'Number of Order',
+            data: [99,89,98,79,74,69,50,60,40,90,81,83],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(0,0,0,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        //de muc
+        title: {
+            display: true,
+            text: "Order statistic by months",
+            padding: 20,
+            position: 'bottom',
+            fontStyle: 'bold',
+            fontSize: 18
+
+        },
+        //chu thich
+        legend:{
+            position: 'right'
+
+        },
+        //layout of whole chart
+        layout: {
+            padding: {
+                left: 100,
+                right: 0,
+                top: 100,
+                bottom: 0
+            }
+        },
+        //modify value of x,y column
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+
+            }]
+        },
+        elements: {
+            line: {
+                tension: 0 // disables bezier curves
+            }
+        }
+  }
+
+
+
+});
+</script>
