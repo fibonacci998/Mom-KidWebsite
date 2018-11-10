@@ -115,23 +115,23 @@
 <script>
     var collection2 = @Html.Raw(Json.Encode(top));
     var ctx2 = document.getElementById("myChart2").getContext('2d');
-    var xlabel=[],xvalue=[];
+    var xlabel2=[],xvalue2=[];
     for (var property in collection2){
         if ( ! collection2.hasOwnProperty(property)) {
             continue;
         }
 
-        xlabel.push(property);
-        xvalue.push(collection2[property]);
+        xlabel2.push(property);
+        xvalue2.push(collection2[property]);
     }
     var myChart2 = new Chart(ctx2, {
 
         type: 'bar',
         data: {
-            labels: xlabel,
+            labels: xlabel2,
             datasets: [{
                 label: 'Số lượng',
-                data: xvalue,
+                data: xvalue2,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -192,9 +192,20 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true,
+                        stepSize: 1
                     }
-
+                }]
+            },
+            time: {
+                unit: 'second',
+                unitStepSize: 10
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false
+                    }
                 }]
             },
             elements: {
