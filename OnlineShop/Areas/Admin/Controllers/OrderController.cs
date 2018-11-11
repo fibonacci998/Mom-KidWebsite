@@ -20,6 +20,7 @@ namespace OnlineShop.Areas.Admin.Controllers
         public JsonResult ChangeStatus(long id)
         {
             var result = new OrderDAO().ChangStatus(id);
+
             return Json(new
             {
                 status = result

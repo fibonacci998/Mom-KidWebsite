@@ -1032,12 +1032,6 @@
     <Content Include="Assets\Client\bootstrap\haravan_common.js" />
     <Content Include="Assets\Client\bootstrap\noDefaultImage6_large.gif" />
     <Content Include="Assets\Client\bootstrap\option_selection.js" />
-    <Content Include="Assets\Client\chart\Gruntfile.js" />
-    <Content Include="Assets\Client\chart\gulpfile.js" />
-    <Content Include="Assets\Client\chart\nbproject\private\private.xml" />
-    <Content Include="Assets\Client\chart\nbproject\project.xml" />
-    <Content Include="Assets\Client\chart\public_html\index.html" />
-    <Content Include="Assets\Client\chart\public_html\index2.html" />
     <Content Include="Assets\Client\js\controller\cartController.js" />
     <Content Include="Assets\Client\js\controller\emailController.js" />
     <Content Include="Assets\Client\slide\dung.jpg" />
@@ -1186,11 +1180,6 @@
     <Content Include="Assets\Admin\js\plugin\ckfinder\userfiles\.htaccess" />
     <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
-    <Content Include="Assets\Client\chart\.bowerrc" />
-    <Content Include="Assets\Client\chart\bower.json" />
-    <Content Include="Assets\Client\chart\nbproject\private\private.properties" />
-    <Content Include="Assets\Client\chart\nbproject\project.properties" />
-    <Content Include="Assets\Client\chart\package.json" />
     <Content Include="Assets\Client\bootstrap\design\member\fonts-master\apache\roboto\roboto-bold.ttf" />
     <Content Include="Assets\Client\bootstrap\design\member\fonts-master\apache\roboto\roboto-bolditalic.ttf" />
     <Content Include="Assets\Client\bootstrap\design\member\fonts-master\apache\roboto\roboto-italic.ttf" />
@@ -1245,7 +1234,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Assets\Client\chart\test\" />
     <Folder Include="Data\files\" />
     <Folder Include="Data\flash\" />
   </ItemGroup>

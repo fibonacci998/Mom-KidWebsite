@@ -36,6 +36,7 @@ namespace OnlineShop.Areas.Admin.Controllers
             var dao = new ProductDAO();
             dao.Insert(product);
             PopulateCategoryDropDownList(product.CategoryID);
+            SetAlert("Thêm sản phẩm thành công", "success");
             return View("Create");
         }
 
@@ -54,6 +55,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                 bool result = dao.Update(product);
                 if (result)
                 {
+                    SetAlert("Sửa sản phẩm thành công", "success");
                     return RedirectToAction("Index", "Product");
                 }
                 else
@@ -66,6 +68,7 @@ namespace OnlineShop.Areas.Admin.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
+            SetAlert("Xóa sản phẩm thành công", "success");
             new ProductDAO().Delete(id);
             return RedirectToAction("Index");
         }
