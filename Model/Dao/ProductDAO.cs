@@ -49,9 +49,22 @@ namespace Model.Dao
             return true;
         }
 
-        public IEnumerable<Product> listAllPaging(int page, int pageSize)
+        public IEnumerable<Product> listAllPaging(string searchString,int page, int pageSize)
         {
-            return db.Products.OrderByDescending(x=>x.ID).ToPagedList(page,pageSize);
+            //IQueryable<User> model = db.Users;
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    model = model.Where(x => x.Username.Contains(searchString) || x.Name.Contains(searchString));
+            //}
+            //return model.
+            //        OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+            IQueryable<Product> model = db.Products;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.Name.Contains(searchString) || x.ID.ToString().Contains(searchString));
+            }
+
+            return model.OrderByDescending(x=>x.ID).ToPagedList(page,pageSize);
         }
         public Product ViewDetail(long id)
         {
