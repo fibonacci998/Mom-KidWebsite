@@ -8,7 +8,7 @@ namespace Model.EF
     public partial class OnlineShopDbContext : DbContext
     {
         public OnlineShopDbContext()
-            : base("name=OnlineShopDbContextAzure")
+            : base("name=OnlineShopDbContext")
         {
         }
 

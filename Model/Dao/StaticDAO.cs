@@ -12,7 +12,7 @@ namespace Model.Dao
     public class StaticDAO
     {
         OnlineShopDbContext db = null;
-        string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["OnlineShopDBContextAzure"].ConnectionString;
+        string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["OnlineShopDBContext"].ConnectionString;
         public StaticDAO()
         {
             db = new OnlineShopDbContext();
